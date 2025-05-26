@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Orders Dashboard</title>
+    <style>
+        table {
+            width: 90%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #0288d1;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;">All Submitted Orders</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Quantity</th>
+            <th>Water Type</th>
+            <th>Service Type</th>
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>{{ order[1] }}</td>
+            <td>{{ order[2] }}</td>
+            <td>{{ order[3] }}</td>
+            <td>{{ order[4] }}</td>
+            <td>{{ order[5] }}</td>
+            <td>{{ order[6] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+
