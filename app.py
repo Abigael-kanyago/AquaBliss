@@ -1,14 +1,18 @@
 from flask import Flask, render_template, request, redirect
 import mysql.connector
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from a .env file (for local dev)
 
 app = Flask(__name__)
 
-# MySQL connection setup
+# MySQL connection setup using environment variables
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="@Ak0wanjiku",
-    database="aquabliss"
+    host=os.getenv("MYSQL_HOST"),
+    user=os.getenv("MYSQL_USER"),
+    password=os.getenv("MYSQL_PASSWORD"),
+    database=os.getenv("MYSQL_DATABASE")
 )
 cursor = db.cursor()
 
@@ -28,7 +32,6 @@ def submit_order():
     print("Form submitted")
     print(name, phone, address, quantity, water_type, service_type)
 
-
     query = """
         INSERT INTO orders (name, phone, address, quantity, water_type, service_type)
         VALUES (%s, %s, %s, %s, %s, %s)
@@ -38,7 +41,7 @@ def submit_order():
     cursor.execute(query, values)
     db.commit()
 
-    return redirect('/')  # ✅ Correctly indented inside the function
+    return redirect('/')  # Correct indentation
 
 @app.route('/orders')
 def view_orders():
