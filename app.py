@@ -1,27 +1,16 @@
 from flask import Flask, render_template, request, redirect
-import psycopg2
-import os
-from urllib.parse import urlparse
+import mysql.connector
 
 app = Flask(__name__)
 
-# Parse DATABASE_URL from environment variable
-DATABASE_URL = os.getenv('DATABASE_URL')
-
-if DATABASE_URL is None:
-    raise Exception("DATABASE_URL environment variable not set")
-
-result = urlparse(DATABASE_URL)
-
-conn = psycopg2.connect(
-    dbname=result.path[1:],
-    user=result.username,
-    password=result.password,
-    host=result.hostname,
-    port=result.port
+# MySQL connection setup
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="@Ak0wanjiku",
+    database="aquabliss"
 )
-
-cursor = conn.cursor()
+cursor = db.cursor()
 
 @app.route('/')
 def index():
@@ -39,6 +28,7 @@ def submit_order():
     print("Form submitted")
     print(name, phone, address, quantity, water_type, service_type)
 
+
     query = """
         INSERT INTO orders (name, phone, address, quantity, water_type, service_type)
         VALUES (%s, %s, %s, %s, %s, %s)
@@ -46,9 +36,9 @@ def submit_order():
     values = (name, phone, address, quantity, water_type, service_type)
 
     cursor.execute(query, values)
-    conn.commit()
+    db.commit()
 
-    return redirect('/')
+    return redirect('/')  # ✅ Correctly indented inside the function
 
 @app.route('/orders')
 def view_orders():
@@ -58,4 +48,3 @@ def view_orders():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
