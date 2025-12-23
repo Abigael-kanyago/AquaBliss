@@ -205,10 +205,14 @@ def send_confirmation_emails(name, customer_email, order_type, details, total_pr
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        # Clean inputs (trim spaces and make username lowercase for easier mobile typing)
+        username = (username or "").strip().lower()
+        password = (password or "").strip()
         
-        if username == os.getenv('ADMIN_USERNAME', 'admin').strip() and password == os.getenv('ADMIN_PASSWORD', 'admin123').strip():
+        expected_user = os.getenv('ADMIN_USERNAME', 'admin').strip().lower()
+        expected_pass = os.getenv('ADMIN_PASSWORD', 'admin123').strip()
+        
+        if username == expected_user and password == expected_pass:
             session['admin_logged_in'] = True
             return redirect(url_for('view_orders'))
         else:
