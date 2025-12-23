@@ -1,45 +1,425 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Orders Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaBliss | Admin Orders Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        table {
-            width: 90%;
-            border-collapse: collapse;
-            margin: 20px auto;
+        :root {
+            --primary: #007bff;
+            --secondary: #00d2ff;
+            --bg: #f8fbff;
+            --text: #333;
+            --white: #ffffff;
+            --pending: #ffc107;
+            --completed: #28a745;
+            --cancelled: #dc3545;
         }
-        th, td {
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            background: #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .price-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .price-card label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .price-card input {
+            width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
         }
-        th {
-            background-color: #0288d1;
+
+        .price-card p {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .save-bar {
+            margin-top: 30px;
+            text-align: right;
+        }
+
+        .btn-save {
+            background: var(--primary);
             color: white;
+            padding: 12px 30px;
+            font-size: 1rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
+
+        .order-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .order-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr 1fr;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.2s;
+        }
+
+        .order-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .customer-info h3 {
+            margin: 0 0 5px;
+            font-size: 1.1rem;
+        }
+
+        .customer-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .order-details {
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+
+        .btn-complete {
+            background: var(--completed);
+            color: white;
+        }
+
+        .btn-cancel {
+            background: var(--cancelled);
+            color: white;
+        }
+
+        .btn-logout {
+            background: #6c757d;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #5a6268;
+            opacity: 1;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 992px) {
+            .order-card {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .order-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .actions {
+                justify-content: center;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
-<body>
-    <h2 style="text-align:center;">All Submitted Orders</h2>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Quantity</th>
-            <th>Water Type</th>
-            <th>Service Type</th>
-        </tr>
-        {% for order in orders %}
-        <tr>
-            <td>{{ order[1] }}</td>
-            <td>{{ order[2] }}</td>
-            <td>{{ order[3] }}</td>
-            <td>{{ order[4] }}</td>
-            <td>{{ order[5] }}</td>
-            <td>{{ order[6] }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
 
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>AquaBliss Admin Dashboard</h1>
+                <p style="margin: 5px 0 0; font-size: 0.9rem; color: #666;">Welcome back, Admin</p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="stats">
+                    <div class="stat-card">
+                        <strong>{{ orders|length }}</strong> Total Orders
+                    </div>
+                </div>
+                <a href="/logout" class="btn-logout">Logout</a>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showSection('orders')">Orders</button>
+            <button class="tab-btn" onclick="showSection('pricing')">Pricing & Products</button>
+        </div>
+
+        <div id="orders-section" class="section active">
+            <div class="order-list">
+                {% for order in orders %}
+                <div class="order-card" id="order-{{ order.id }}">
+                    <div class="customer-info">
+                        <h3>{{ order.name }}</h3>
+                        <p>{{ order.phone }}</p>
+                        <p>{{ order.email }}</p>
+                    </div>
+
+                    <div class="order-details">
+                        <strong>{{ order.order_type.capitalize() }}</strong> - KSh {{ order.total_price }}<br>
+                        <small>
+                            {% if order.order_type == 'refill' %}
+                            Bottle: {{ order.details.bottle }} | Pump: {{ order.details.pump }} | {{
+                            order.details.liters
+                            }}L
+                            {% else %}
+                            Brand: {{ order.details.brand }} | Qty: {{ order.details.quantity }}
+                            {% endif %}
+                        </small><br>
+                        <small>📍 {{ order.address }}</small>
+                    </div>
+
+                    <div class="status">
+                        <span class="badge badge-{{ order.status }}">{{ order.status }}</span>
+                        <br><small>{{ order.created_at.strftime('%b %d, %H:%M') }}</small>
+                    </div>
+
+                    <div class="actions">
+                        {% if order.status != 'completed' %}
+                        <button class="btn btn-complete"
+                            onclick="updateStatus({{ order.id }}, 'completed')">Complete</button>
+                        {% endif %}
+                        {% if order.status != 'cancelled' %}
+                        <button class="btn btn-cancel"
+                            onclick="updateStatus({{ order.id }}, 'cancelled')">Cancel</button>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div id="pricing-section" class="section">
+            <div class="pricing-grid" id="pricing-grid">
+                <!-- Loaded via JS -->
+                <p>Loading prices...</p>
+            </div>
+            <div class="save-bar">
+                <button class="btn btn-save" onclick="savePrices()">Save All Prices</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById(`${sectionId}-section`).classList.add('active');
+            event.target.classList.add('active');
+
+            if (sectionId === 'pricing') {
+                loadPrices();
+            }
+        }
+
+        async function loadPrices() {
+            try {
+                const response = await fetch('/get-prices');
+                const data = await response.json();
+                if (data.success) {
+                    const grid = document.getElementById('pricing-grid');
+                    grid.innerHTML = data.prices.map(p => `
+                        <div class="price-card">
+                            <label>${p.key.replace(/_/g, ' ').toUpperCase()}</label>
+                            <input type="number" step="0.01" value="${p.value}" data-key="${p.key}">
+                            <p>${p.description}</p>
+                        </div>
+                    `).join('');
+                }
+            } catch (err) {
+                alert('Failed to load prices');
+            }
+        }
+
+        async function savePrices() {
+            const inputs = document.querySelectorAll('#pricing-grid input');
+            const newPrices = {};
+            inputs.forEach(input => {
+                newPrices[input.getAttribute('data-key')] = input.value;
+            });
+
+            try {
+                const response = await fetch('/update-prices', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newPrices)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert('Prices updated successfully!');
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (err) {
+                alert('Failed to save prices');
+            }
+        }
+
+        async function updateStatus(id, status) {
+            if (!confirm(`Mark order #${id} as ${status}?`)) return;
+
+            try {
+                const response = await fetch(`/update-order-status/${id}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: status })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    location.reload(); // Refresh to show updated status
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Update failed:', error);
+                alert('Connection error. Please check backend.');
+            }
+        }
+    </script>
+</body>
+
+</html>

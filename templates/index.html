@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AquaBliss | Pure Water, Pure Bliss</title>
   <style>
     body {
@@ -13,146 +14,148 @@
     }
 
     /* Top Blue Bar */
-.top-bar {
-  background-color: hsl(138, 94%, 36%);
-  color: white;
-  font-size: 14px;
-  padding: 10px 0;
-}
+    .top-bar {
+      background-color: hsl(138, 94%, 36%);
+      color: white;
+      font-size: 14px;
+      padding: 10px 0;
+    }
 
-.top-bar-content {
-  display: flex;
-  justify-content: right;
-  gap: 30px;
-  flex-wrap: wrap;
-  font-weight: 500;
-}
+    .top-bar-content {
+      display: flex;
+      justify-content: right;
+      gap: 30px;
+      flex-wrap: wrap;
+      font-weight: 500;
+    }
 
-/* Header with Logo */
-.scrolling-header {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  background-color: #ffffff;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  position: relative;
-}
+    /* Header with Logo */
+    .scrolling-header {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      background-color: #ffffff;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+    }
 
-.scrolling-content {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scroll-left 20s linear infinite;
-  font-size: 28px;
-  color: #007bff;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
+    .scrolling-content {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      white-space: nowrap;
+      animation: scroll-left 40s linear infinite;
+      font-size: 28px;
+      color: #007bff;
+      font-weight: bold;
+      width: max-content;
+    }
 
-.scroll-logo {
-  height: 40px;
-  vertical-align: middle;
-}
+    .scroll-logo {
+      height: 40px;
+      vertical-align: middle;
+    }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
 
 
-.logo-container {
-  display: flex;
-  align-items: left;
-  justify-content: left;
-  gap: 15px;
-}
+    .logo-container {
+      display: flex;
+      align-items: left;
+      justify-content: left;
+      gap: 15px;
+    }
 
-.logo-image {
-  width: 50px;
-  height: 50px;
-}
+    .logo-image {
+      width: 50px;
+      height: 50px;
+    }
 
-.site-name {
-  font-size: 24px;
-  font-weight: bold;
-  color: #015fc9;
-  margin: 0;
-}
+    .site-name {
+      font-size: 24px;
+      font-weight: bold;
+      color: #015fc9;
+      margin: 0;
+    }
 
 
     /* Hero Slider */
-.hero-slider {
-  position: relative;
-  height: 400px;
-  overflow: hidden;
-}
+    .hero-slider {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+    }
 
-.slides {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
+    .slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
 
-.slide {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
-  object-position: center; /* default for all */
-}
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      object-position: center;
+      /* default for all */
+    }
 
-/* Custom object position ONLY for the first slide (man with bottle) */
-.slide-man {
-  object-position: 45% 20%;
-}
+    /* Custom object position ONLY for the first slide (man with bottle) */
+    .slide-man {
+      object-position: 45% 20%;
+    }
 
-.slide-first {
-  object-fit: cover;
-  object-position: 45% 20%;
-  
-}
+    .slide-first {
+      object-fit: cover;
+      object-position: 45% 20%;
 
-.slide-drink{
-object-position: 455 20%;
-}
+    }
 
-.slide.active {
-  opacity: 1;
-}
+    .slide-drink {
+      object-position: 455 20%;
+    }
 
-     
-.whatsapp-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 999;
-  width: 60px;
-  height: 60px;
-  background-color: #25D366;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
-}
+    .slide.active {
+      opacity: 1;
+    }
 
-.whatsapp-float img {
-  width: 35px;
-  height: 35px;
-}
 
-.whatsapp-float:hover {
-  transform: scale(1.1);
-}
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background-color: #25D366;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .whatsapp-float img {
+      width: 35px;
+      height: 35px;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
 
 
 
@@ -175,10 +178,21 @@ object-position: 455 20%;
       background: white;
       padding: 1.5rem;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       text-align: center;
       flex: 1;
+      transform: translateX(100px);
+      opacity: 0;
+      transition: all 0.8s ease;
     }
+
+    /* When in view, slide in */
+    .card.slide-in {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+
 
     .btn {
       background: #0077cc;
@@ -205,15 +219,22 @@ object-position: 455 20%;
     }
 
     @keyframes slideIn {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     form {
       background: white;
       padding: 2rem;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     label {
@@ -221,7 +242,8 @@ object-position: 455 20%;
       margin-top: 1rem;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
       padding: 0.5rem;
       margin-top: 0.5rem;
@@ -232,380 +254,599 @@ object-position: 455 20%;
     .btn.full {
       width: 100%;
       margin-top: 1.5rem;
-       background-color: #4CAF50; /* M-Pesa green */
-       color: white;
-        padding: 10px 20px;
-        border: none;
-        font-weight: bold;
-        border-radius: 5px;
-        cursor: pointer;
+      background-color: #4CAF50;
+      /* M-Pesa green */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     /* Footer Main Styling */
-.footer {
-  background-color: #015fc9;
-  color: white;
-  padding: 60px 30px 30px;
-  font-family: 'Segoe UI', sans-serif;
-}
+    .footer {
+      background-color: #015fc9;
+      color: white;
+      padding: 60px 30px 30px;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-.footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 30px;
-  max-width: 1200px;
-  margin: auto;
-}
+    .footer-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-.footer-col {
-  flex: 1 1 200px;
-  min-width: 200px;
-}
+    .footer-col {
+      flex: 1 1 200px;
+      min-width: 200px;
+    }
 
-.footer h2.logo {
-  font-size: 28px;
-  margin-bottom: 10px;
-}
+    .footer h2.logo {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
 
-.footer h3 {
-  font-size: 20px;
-  margin-bottom: 15px;
-  position: relative;
-}
+    .footer h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      position: relative;
+    }
 
-.footer h3::after {
-  content: "";
-  display: block;
-  width: 40px;
-  height: 3px;
-  background-color: #fff;
-  margin-top: 5px;
-}
+    .footer h3::after {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 3px;
+      background-color: #fff;
+      margin-top: 5px;
+    }
 
-.footer p {
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 1.6;
-}
+    .footer p {
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
 
-.footer-checks {
-  list-style: none;
-  padding: 0;
-  font-size: 14px;
-}
+    .footer-checks {
+      list-style: none;
+      padding: 0;
+      font-size: 14px;
+    }
 
-.footer-checks li::before {
-  content: '✔ ';
-  color: #77ffcc;
-  font-weight: bold;
-}
+    .footer-checks li::before {
+      content: '✔ ';
+      color: #77ffcc;
+      font-weight: bold;
+    }
 
-.footer-btn {
-  background: #66d6f0;
-  border: none;
-  color: black;
-  padding: 10px 20px;
-  font-weight: bold;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+    .footer-btn {
+      background: #66d6f0;
+      border: none;
+      color: black;
+      padding: 10px 20px;
+      font-weight: bold;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-.footer-btn:hover {
-  background: #aef0ff;
-}
+    .footer-btn:hover {
+      background: #aef0ff;
+    }
 
-/* Footer Bottom */
-.footer-bottom {
-  text-align: center;
-  margin-top: 40px;
-  border-top: 1px solid rgba(255, 255, 255, 0.3);
-  padding-top: 15px;
-  font-size: 13px;
-}
+    /* Footer Bottom */
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      padding-top: 15px;
+      font-size: 13px;
+    }
 
-.footer-bottom a {
-  color: white;
-  text-decoration: none;
-  margin: 0 5px;
-}
+    .footer-bottom a {
+      color: white;
+      text-decoration: none;
+      margin: 0 5px;
+    }
 
-.footer-bottom a:hover {
-  text-decoration: underline;
-}
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
 
-@media (max-width: 768px) {
-  .hero-slider {
-    height: 300px; /* Reduce height on mobile */
-  }
+    /* Success Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(5px);
+    }
 
-  .slide-text {
-    font-size: 1.2rem; /* Smaller text */
-    bottom: 8%;
-    left: 5%;
-    right: 5%;
-    text-align: center;
-  }
+    .success-modal {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      transform: scale(0.7);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 
-  .slide {
-    object-position: center top; /* Focus on top part for smaller view */
-  }
+    .success-modal.show {
+      transform: scale(1);
+      opacity: 1;
+    }
 
-  form input,
-  form select,
-  form button {
-    width: 100%;
-    font-size: 1rem;
-  }
-}
+    .success-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+      display: block;
+    }
 
+    .success-modal h2 {
+      color: #28a745;
+      margin-top: 0;
+    }
 
+    .success-modal p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .modal-btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 10px;
+      font-weight: 600;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .modal-btn:hover {
+      background: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      .top-bar-content {
+        justify-content: center;
+        text-align: center;
+        gap: 10px;
+        padding: 5px;
+      }
+
+      .scrolling-header {
+        padding: 5px 0;
+      }
+
+      .scrolling-content {
+        font-size: 20px;
+        gap: 30px;
+      }
+
+      .hero-slider {
+        height: 250px;
+      }
+
+      .services {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1.5rem;
+      }
+
+      .card {
+        transform: none;
+        opacity: 1;
+        transition: none;
+        margin-bottom: 0;
+      }
+
+      .form-section {
+        padding: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      form {
+        padding: 1.5rem;
+      }
+
+      .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+      }
+
+      .footer h3::after {
+        margin: 5px auto 0;
+      }
+
+      .footer-checks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
   </style>
 </head>
+
 <body>
-<!-- Top Notification Bar -->
-<div class="top-bar">
-  <div class="top-bar-content">
-    <span>📦 Immediate Delivery</span>
-    <span>📞 0746808075</span>
-    <span>🕒 Sun - Fri: 09.00am to 09.30pm</span>
-    <span>📧 aquabliss217@gmail.com</span>
-  </div>
-</div>
-
-<!-- Header with Logo -->
-<div class="scrolling-header">
-  <div class="scrolling-content">
-    <img src="{{ url_for('static', filename='logo-1.PNG') }}" alt="Logo">
-
-    <span class="scroll-text">
-      Welcome to AquaBliss – Pure water,,Pure bliss,We offer the best quality water, always fresh and pure! 
-    </span>
-  </div>
-</div>
-
-<section class="hero-slider">
-  <div class="slides">
-    <img src="{{ url_for('static', filename='first.png') }}" alt="First" class="slide slide-first active">
-    
-  </div>
-</section>
-
-<a href="https://wa.me/254743970594" target="_blank" class="whatsapp-float" title="Chat with us on WhatsApp">
-  <img src="{{ url_for('static', filename='whatsapp.png') }}" alt="WhatsApp Chat">
-</a>
-
-<!-- Services -->
-<section id="services" class="services">
-  <div class="card">
-    <h3>Water Refilling</h3>
-    <p>We deliver clean refilled water to your home or office.</p>
-    <button class="btn" onclick="showForm('refill')">Order Now</button>
-  </div>
-  <div class="card">
-    <h3>Packaged Water</h3>
-    <p>Buy sealed, labeled bottled water with optional branding.</p>
-    <button class="btn" onclick="showForm('packaged')">Order Now</button>
-  </div>
-</section>
-
-<!-- Refill Form -->
-<div id="refill-form" class="form-section">
-  <h2>Water Refilling Order</h2>
-  <form>
-    <label for="name">Full Name:</label>
-    <input type="text" id="name" required>
-
-    <label for="bottle">Do you need a bottle?</label>
-    <select id="bottle">
-      <option value="no">No, I have my own</option>
-      <option value="yes">Yes (+KSh 180)</option>
-    </select>
-
-    <label for="pump">Do you need a pump?</label>
-    <select id="pump">
-      <option value="no">No</option>
-      <option value="yes">Yes (+KSh 250)</option>
-    </select>
-
-    <label for="address">Delivery Address:</label>
-    <input type="text" id="address" required>
-
-    <label for="Phone Number">phone number:</label>
-    <input type="number" id="phone number" required>
-
-    <label for="liters">Liters of water:</label>
-    <input type="number" id="liters" min="1" value="1" required>
-
-    <p><strong>Total Price: KSh <span id="refill-price">10</span></strong></p>
-
-    <button id="mpesa-button" class="btn full" type="submit">Lipa na M-pesa</button>
-
-  </form>
-</div>
-
-<!-- Packaged Form -->
-<div id="packaged-form" class="form-section">
-  <h2>Packaged Water Order</h2>
-  <form>
-    <label for="name-p">Full Name:</label>
-    <input type="text" id="name-p" required>
-
-    <label for="brand">Do you want it branded?</label>
-    <select id="brand">
-      <option value="no">No</option>
-      <option value="yes">Yes (+KSh 100)</option>
-    </select>
-
-    <label for="address-p">Delivery Address:</label>
-    <input type="text" id="address-p" required>
-
-    <label for="Phone Number">phone number:</label>
-    <input type="number" id="phone number" required>
-
-    <label for="quantity">Quantity of 20L bottles:</label>
-    <input type="number" id="quantity" min="1" value="1" required>
-
-    <p><strong>Total Price: KSh <span id="packaged-price">180</span></strong></p>
-
-   <button id="mpesa-button" class="btn full" type="submit">Lipa na M-pesa</button>
-
-  </form>
-</div>
-
-
-
-<footer class="footer">
-  <div class="footer-container">
-    <!-- Column 1 -->
-    <div class="footer-col">
-      <h2 class="logo">AquaBliss</h2>
-      <p>
-        Refresh your life with clean, pure water. Delivered with care and commitment every day.
+  <!-- Success Modal -->
+  <div id="successModal" class="modal-overlay">
+    <div class="success-modal" id="modalContent">
+      <span class="success-icon">✅</span>
+      <h2>Order Successful!</h2>
+      <p>Thank you for choosing AquaBliss. We have received your order and will contact you shortly to confirm delivery.
       </p>
-      <ul class="footer-checks">
-        <li>✔ Free Delivery</li>
-        <li>✔ Secure Payment Options</li>
-      </ul>
-    </div>
-
-    
-
-    <!-- Column 3 -->
-    <div class="footer-col">
-      <h3>Locations</h3>
-      <p>
-        Along garissa road<br>
-        oryx makongeni<br>
-        Email: aquabliss217@gmail.com<br>
-        0743970594/0708045932
-      </p>
-    </div>
-
-    <!-- Column 4 -->
-    <div class="footer-col">
-      <h3>Business Hours</h3>
-      <p>Sunday - Friday: 09:00 am to 9:30 pm</p>
-      <p>Welcome to your perfect water spot</p>
-      
+      <button class="modal-btn" onclick="closeModal()">Great!</button>
     </div>
   </div>
-  <div class="footer-bottom">
-    <p>&copy; 2025 AquaBliss. All Rights Reserved.</p>
-    <p><a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Sitemap</a></p>
+  <!-- Top Notification Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <span>📦 Immediate Delivery</span>
+      <span>📞 0746808075</span>
+      <span>🕒 Sun - Fri: 09.00am to 09.30pm</span>
+      <span>📧 aquabliss217@gmail.com</span>
+    </div>
   </div>
-</footer>
+
+  <!-- Header with Logo -->
+  <div class="scrolling-header">
+    <div class="scrolling-content">
+      <!-- Original Content -->
+      <img src="../static/logo-1.PNG" alt="Logo">
+      <span class="scroll-text">
+        Welcome to AquaBliss – Pure water, Pure bliss. We offer the best quality water, always fresh and pure!
+      </span>
+
+      <!-- Duplicated Content for Seamless Loop -->
+      <img src="../static/logo-1.PNG" alt="Logo">
+      <span class="scroll-text">
+        Welcome to AquaBliss – Pure water, Pure bliss. We offer the best quality water, always fresh and pure!
+      </span>
+    </div>
+  </div>
+
+  <section class="hero-slider">
+    <div class="slides">
+      <img src="../static/first.png" alt="First" class="slide slide-first active">
+
+    </div>
+  </section>
+
+  <a href="https://wa.me/254743970594" target="_blank" class="whatsapp-float" title="Chat with us on WhatsApp">
+    <img src="../static/whatsapp.png" alt="WhatsApp Chat">
+  </a>
+
+  <!-- Services -->
+  <section id="services" class="services">
+    <div class="card">
+      <h3>Water Refilling</h3>
+      <p>We deliver clean refilled water to your home or office.</p>
+      <button class="btn" onclick="showForm('refill')">Order Now</button>
+    </div>
+    <div class="card">
+      <h3>Packaged Water</h3>
+      <p>Buy sealed, labeled bottled water with optional branding.</p>
+      <button class="btn" onclick="showForm('packaged')">Order Now</button>
+    </div>
+  </section>
+
+  <!-- Refill Form -->
+  <div id="refill-form" class="form-section">
+    <h2>Water Refilling Order</h2>
+    <form id="refill-form-el">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="bottle">Do you need a bottle?</label>
+      <select id="bottle" name="bottle">
+        <option value="no">No, I have my own</option>
+        <option value="yes">Yes (+KSh 180)</option>
+      </select>
+
+      <label for="pump">Do you need a pump?</label>
+      <select id="pump" name="pump">
+        <option value="no">No</option>
+        <option value="yes">Yes (+KSh 250)</option>
+      </select>
+
+      <label for="address">Delivery Address:</label>
+      <input type="text" id="address" name="address" required>
+
+      <label for="phone">Phone Number:</label>
+      <input type="number" id="phone" name="phone" required>
+
+      <label for="liters">Liters of water:</label>
+      <input type="number" id="liters" name="liters" min="1" value="1" required>
+
+      <p><strong>Total Price: KSh <span id="refill-price">10</span></strong></p>
+
+      <button type="submit" class="btn full">Place Order</button>
+    </form>
+  </div>
+
+  <!-- Packaged Form -->
+  <div id="packaged-form" class="form-section">
+    <h2>Packaged Water Order</h2>
+    <form id="packaged-form-el">
+      <label for="name-p">Full Name:</label>
+      <input type="text" id="name-p" name="name" required>
+
+      <label for="email-p">Email Address:</label>
+      <input type="email" id="email-p" name="email" required>
+
+      <label for="brand">Do you want it branded?</label>
+      <select id="brand" name="brand">
+        <option value="no">No</option>
+        <option value="yes">Yes (+KSh 100)</option>
+      </select>
+
+      <label for="address-p">Delivery Address:</label>
+      <input type="text" id="address-p" name="address" required>
+
+      <label for="phone-p">Phone Number:</label>
+      <input type="number" id="phone-p" name="phone" required>
+
+      <label for="quantity">Quantity of 20L bottles:</label>
+      <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+
+      <p><strong>Total Price: KSh <span id="packaged-price">180</span></strong></p>
+
+      <button type="submit" class="btn full">Place Order</button>
+    </form>
+  </div>
 
 
-<script>
-  // Hero slider
-  let currentSlide = 0;
-  const slides = document.querySelectorAll(".slide");
 
-  function showSlide(index) {
-    slides.forEach((slide, i) => {
-      slide.classList.remove("active");
-      if (i === index) slide.classList.add("active");
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Column 1 -->
+      <div class="footer-col">
+        <h2 class="logo">AquaBliss</h2>
+        <p>
+          Refresh your life with clean, pure water. Delivered with care and commitment every day.
+        </p>
+        <ul class="footer-checks">
+          <li>✔ Free Delivery</li>
+          <li>✔ Secure Payment Options</li>
+        </ul>
+      </div>
+
+
+
+      <!-- Column 3 -->
+      <div class="footer-col">
+        <h3>Locations</h3>
+        <p>
+          Along garissa road<br>
+          oryx makongeni<br>
+          Email: aquabliss217@gmail.com<br>
+          0743970594/0708045932
+        </p>
+      </div>
+
+      <!-- Column 4 -->
+      <div class="footer-col">
+        <h3>Business Hours</h3>
+        <p>Sunday - Friday: 09:00 am to 9:30 pm</p>
+        <p>Welcome to your perfect water spot</p>
+
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 AquaBliss. All Rights Reserved.</p>
+      <p><a href="#">Terms & Conditions</a> | <a href="#">Privacy Policy</a> | <a href="#">Sitemap</a></p>
+    </div>
+  </footer>
+
+
+  <script>
+    // Hero slider
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".slide");
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove("active");
+        if (i === index) slide.classList.add("active");
+      });
+    }
+
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 4000);
+
+    // Show services with animation
+    const cards = document.querySelectorAll('.card');
+
+    const slideInOnScroll = () => {
+      cards.forEach(card => {
+        const cardTop = card.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+
+        if (cardTop < windowHeight - 50) {
+          card.classList.add('slide-in');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', slideInOnScroll);
+    window.addEventListener('load', slideInOnScroll); // trigger once on load
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("services").classList.add("visible");
+      fetchPrices();
     });
-  }
 
-  setInterval(() => {
-    currentSlide = (currentSlide + 1) % slides.length;
-    showSlide(currentSlide);
-  }, 4000);
+    function showForm(type) {
+      const form = document.getElementById(`${type}-form`);
+      const isAlreadyVisible = form.classList.contains("show");
 
-  // Show services with animation
-  window.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("services").classList.add("visible");
-    calculateRefillTotal();
-    calculatePackagedTotal();
-  });
+      // Hide all forms first
+      document.getElementById("refill-form").classList.remove("show");
+      document.getElementById("packaged-form").classList.remove("show");
 
-  function showForm(type) {
-    document.getElementById("refill-form").classList.remove("show");
-    document.getElementById("packaged-form").classList.remove("show");
-    document.getElementById(`${type}-form`).classList.add("show");
-  }
+      // If it wasn't visible before, show it now (Toggle behavior)
+      if (!isAlreadyVisible) {
+        form.classList.add("show");
 
-  // Price calculations
-  const refillPricePerLiter = 10;
-  const bottleCost = 180;
-  const pumpCost = 250;
+        // Optional: smooth scroll to form if showing
+        window.scrollTo({
+          top: form.offsetTop - 100,
+          behavior: 'smooth'
+        });
+      }
+    }
 
-  const litersInput = document.getElementById("liters");
-  const pumpSelect = document.getElementById("pump");
-  const bottleSelect = document.getElementById("bottle");
-  const refillPriceDisplay = document.getElementById("refill-price");
+    // Price calculations (Fallbacks if fetch fails)
+    let refillPricePerLiter = 10;
+    let bottleCost = 180;
+    let pumpCost = 250;
+    let packagedPrice20L = 180;
+    let brandingCost = 100;
 
-  function calculateRefillTotal() {
-    let liters = parseInt(litersInput.value) || 0;
-    let price = liters * refillPricePerLiter;
-    if (bottleSelect.value === "yes") price += bottleCost;
-    if (pumpSelect.value === "yes") price += pumpCost;
-    refillPriceDisplay.textContent = price;
-  }
+    // Fetch prices from backend
+    async function fetchPrices() {
+      try {
+        const response = await fetch('/get-prices');
+        const data = await response.json();
+        if (data.success) {
+          data.prices.forEach(setting => {
+            if (setting.key === 'refill_price_per_liter') refillPricePerLiter = parseFloat(setting.value);
+            if (setting.key === 'bottle_cost') bottleCost = parseFloat(setting.value);
+            if (setting.key === 'pump_cost') pumpCost = parseFloat(setting.value);
+            if (setting.key === 'packaged_price_20l') packagedPrice20L = parseFloat(setting.value);
+            if (setting.key === 'branding_cost') brandingCost = parseFloat(setting.value);
+          });
+          // Recalculate everything once prices are loaded
+          calculateRefillTotal();
+          calculatePackagedTotal();
+        }
+      } catch (err) {
+        console.error("Failed to fetch prices:", err);
+      }
+    }
 
-  litersInput.addEventListener("input", calculateRefillTotal);
-  pumpSelect.addEventListener("change", calculateRefillTotal);
-  bottleSelect.addEventListener("change", calculateRefillTotal);
+    const litersInput = document.getElementById("liters");
+    const pumpSelect = document.getElementById("pump");
+    const bottleSelect = document.getElementById("bottle");
+    const refillPriceDisplay = document.getElementById("refill-price");
 
-  const packagedPriceDisplay = document.getElementById("packaged-price");
-  const quantityInput = document.getElementById("quantity");
-  const brandSelect = document.getElementById("brand");
+    function calculateRefillTotal() {
+      let liters = parseInt(litersInput.value) || 0;
+      let price = liters * refillPricePerLiter;
+      if (bottleSelect.value === "yes") price += bottleCost;
+      if (pumpSelect.value === "yes") price += pumpCost;
+      refillPriceDisplay.textContent = price;
+    }
 
-  function calculatePackagedTotal() {
-    let quantity = parseInt(quantityInput.value) || 0;
-    let price = quantity * 180;
-    if (brandSelect.value === "yes") price += 100;
-    packagedPriceDisplay.textContent = price;
-  }
+    litersInput.addEventListener("input", calculateRefillTotal);
+    pumpSelect.addEventListener("change", calculateRefillTotal);
+    bottleSelect.addEventListener("change", calculateRefillTotal);
 
-  quantityInput.addEventListener("input", calculatePackagedTotal);
-  brandSelect.addEventListener("change", calculatePackagedTotal);
-  document.getElementById('mpesa-button').addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent form submission and page reload
+    const packagedPriceDisplay = document.getElementById("packaged-price");
+    const quantityInput = document.getElementById("quantity");
+    const brandSelect = document.getElementById("brand");
 
-  let phone = prompt("Enter your M-Pesa phone number to proceed:");
+    function calculatePackagedTotal() {
+      let quantity = parseInt(quantityInput.value) || 0;
+      let price = quantity * packagedPrice20L;
+      if (brandSelect.value === "yes") price += brandingCost;
+      packagedPriceDisplay.textContent = price;
+    }
 
-  if (phone) {
-    alert("Thank you! A payment request has been sent to " + phone);
-    // You can add your backend call here later
-  } else {
-    alert("Payment cancelled.");
-  }
-});
+    quantityInput.addEventListener("input", calculatePackagedTotal);
+    brandSelect.addEventListener("change", calculatePackagedTotal);
+    // Form Submission Handling
+    function handleFormSubmission(formId, type) {
+      const form = document.getElementById(formId);
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        data.order_type = type;
+        data.total_price = document.getElementById(`${type}-price`).textContent;
+
+        // Visual feedback
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "Processing...";
+        submitBtn.disabled = true;
+
+        fetch('/submit-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then(response => response.json())
+          .then(result => {
+            if (result.success) {
+              showSuccessModal();
+              form.reset();
+              showForm(type); // Toggle off
+            } else {
+              alert("Error: " + result.message);
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert("Something went wrong. Please try again or contact us via WhatsApp.");
+          })
+          .finally(() => {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+          });
+      });
+    }
+
+    handleFormSubmission('refill-form-el', 'refill');
+    handleFormSubmission('packaged-form-el', 'packaged');
+
+    function showSuccessModal() {
+      const modal = document.getElementById('successModal');
+      const content = document.getElementById('modalContent');
+      modal.style.display = 'flex';
+      setTimeout(() => {
+        content.classList.add('show');
+      }, 10);
+    }
+
+    function closeModal() {
+      const content = document.getElementById('modalContent');
+      const modal = document.getElementById('successModal');
+      content.classList.remove('show');
+      setTimeout(() => {
+        modal.style.display = 'none';
+      }, 400);
+    }
 
 
-</script>
+  </script>
 
 </body>
+
 </html>
-
-
-
-
-
-
-
-
