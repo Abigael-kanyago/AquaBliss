@@ -12,11 +12,18 @@ app.secret_key = os.getenv("SECRET_KEY", "dev_secret_key")
 
 # Database configuration
 def get_db_connection():
-    # Attempt to load from standard names first, then fall back to MYSQL_ names for local dev
+    # 1. Prefer a single DATABASE_URL (Standard for Neon/Vercel)
+    db_url = os.getenv("DATABASE_URL")
+    if db_url:
+        try:
+            return psycopg2.connect(db_url, connect_timeout=5)
+        except Exception as e:
+            raise Exception(f"DATABASE CONNECTION ERROR (URL): {str(e)}")
+
+    # 2. Fall back to individual variables
     host = os.getenv("DB_HOST", os.getenv("MYSQL_HOST", "localhost"))
     user = os.getenv("DB_USER", os.getenv("MYSQL_USER"))
     
-    # SECURITY FIX: PostgreSQL usually uses 'postgres' as admin, not 'root'
     if user == 'root' or user is None:
         user = 'postgres'
         
@@ -29,11 +36,11 @@ def get_db_connection():
             user=user,
             password=password,
             database=dbname,
-            connect_timeout=5 # Don't hang forever
+            connect_timeout=5 
         )
         return conn
     except Exception as e:
-        raise Exception(f"DATABASE CONNECTION ERROR: {str(e)}. (Check your Vercel Environment Variables and ensure your database is accessible from the internet).")
+        raise Exception(f"DATABASE CONNECTION ERROR: {str(e)}. (Check your Vercel Environment Variables).")
 
 # Email configuration
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
@@ -112,6 +119,15 @@ except Exception as e:
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/debug-db')
+def debug_db():
+    try:
+        conn = get_db_connection()
+        conn.close()
+        return "Database Connection: SUCCESS"
+    except Exception as e:
+        return f"Database Connection: FAILED - {str(e)}"
 
 @app.route('/submit-order', methods=['POST'])
 def submit_order():
