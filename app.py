@@ -23,13 +23,17 @@ def get_db_connection():
     password = os.getenv("DB_PASSWORD", os.getenv("MYSQL_PASSWORD"))
     dbname = os.getenv("DB_NAME", os.getenv("MYSQL_DATABASE"))
     
-    conn = psycopg2.connect(
-        host=host,
-        user=user,
-        password=password,
-        database=dbname
-    )
-    return conn
+    try:
+        conn = psycopg2.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=dbname,
+            connect_timeout=5 # Don't hang forever
+        )
+        return conn
+    except Exception as e:
+        raise Exception(f"DATABASE CONNECTION ERROR: {str(e)}. (Check your Vercel Environment Variables and ensure your database is accessible from the internet).")
 
 # Email configuration
 app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
