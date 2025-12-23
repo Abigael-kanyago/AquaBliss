@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import psycopg2
+from psycopg2.extras import RealDictCursor
 import os
 from dotenv import load_dotenv
 from flask_mail import Mail, Message
@@ -249,7 +250,6 @@ def logout():
 @login_required
 def view_orders():
     try:
-        from psycopg2.extras import RealDictCursor
         conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT * FROM orders ORDER BY created_at DESC")
