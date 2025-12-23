@@ -208,7 +208,7 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         
-        if username == os.getenv('ADMIN_USERNAME', 'admin') and password == os.getenv('ADMIN_PASSWORD', 'admin123'):
+        if username == os.getenv('ADMIN_USERNAME', 'admin').strip() and password == os.getenv('ADMIN_PASSWORD', 'admin123').strip():
             session['admin_logged_in'] = True
             return redirect(url_for('view_orders'))
         else:
