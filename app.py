@@ -227,8 +227,8 @@ def send_confirmation_emails(name, customer_email, order_type, details, total_pr
 def login():
     if request.method == 'POST':
         # Clean inputs (trim spaces and make username lowercase for easier mobile typing)
-        username = (username or "").strip().lower()
-        password = (password or "").strip()
+        username = (request.form.get('username') or "").strip().lower()
+        password = (request.form.get('password') or "").strip()
         
         expected_user = os.getenv('ADMIN_USERNAME', 'admin').strip().lower()
         expected_pass = os.getenv('ADMIN_PASSWORD', 'admin123').strip()
