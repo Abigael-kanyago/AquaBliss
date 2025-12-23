@@ -314,5 +314,14 @@ def update_prices():
     except Exception as e:
         return jsonify({"success": False, "message": str(e)}), 500
 
+@app.errorhandler(500)
+def internal_error(error):
+    import traceback
+    return f"500 INTERNAL SERVER ERROR: {str(error)} <br> <pre>{traceback.format_exc()}</pre>", 500
+
+@app.errorhandler(404)
+def not_found(error):
+    return "404 NOT FOUND: The requested URL was not found on the server.", 404
+
 if __name__ == '__main__':
     app.run(debug=True)
