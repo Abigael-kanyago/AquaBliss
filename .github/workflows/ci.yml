@@ -40,4 +40,4 @@ jobs:
           ADMIN_USERNAME: testadmin
           ADMIN_PASSWORD: testpass123
         run: |
-          pytest tests/ -v --tb=short
+          python -m pytest tests/ -v --tb=short
