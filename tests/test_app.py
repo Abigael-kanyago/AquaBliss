@@ -28,6 +28,24 @@ def client(mocker):
     # Mock init_db so the app can be imported without a live DB.
     mocker.patch("app.init_db")
 
+    # Mock get_db_connection by default to return a mock connection and cursor
+    from werkzeug.security import generate_password_hash
+    hashed = generate_password_hash("testpass123")
+    
+    mock_conn = mocker.MagicMock()
+    mock_cur = mocker.MagicMock()
+    
+    # fetchone returns our test user
+    mock_cur.fetchone.return_value = {
+        "id": 1,
+        "username": "testadmin",
+        "password_hash": hashed,
+        "role": "admin"
+    }
+    mock_conn.cursor.return_value = mock_cur
+    
+    mocker.patch("app.get_db_connection", return_value=mock_conn)
+
     from app import app as flask_app
 
     flask_app.config["TESTING"] = True
