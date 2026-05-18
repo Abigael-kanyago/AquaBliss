@@ -35,13 +35,9 @@ def client(mocker):
     mock_conn = mocker.MagicMock()
     mock_cur = mocker.MagicMock()
     
-    # fetchone returns our test user
-    mock_cur.fetchone.return_value = {
-        "id": 1,
-        "username": "testadmin",
-        "password_hash": hashed,
-        "role": "admin"
-    }
+    # Configure description and fetchone to satisfy DictCursor
+    mock_cur.description = [("id",), ("username",), ("password_hash",), ("role",)]
+    mock_cur.fetchone.return_value = (1, "testadmin", hashed, "admin")
     mock_conn.cursor.return_value = mock_cur
     
     mocker.patch("app.get_db_connection", return_value=mock_conn)
