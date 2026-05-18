@@ -351,7 +351,10 @@ def submit_order():
         cur.close()
         conn.close()
 
-        _send_confirmation_emails(name, email, order_type, details, calculated_total, address)
+        try:
+            _send_confirmation_emails(name, email, order_type, details, calculated_total, address)
+        except Exception as email_exc:
+            logger.error("Failed to send confirmation emails: %s", email_exc)
 
         return jsonify({"success": True, "message": "Order placed successfully!"})
 
