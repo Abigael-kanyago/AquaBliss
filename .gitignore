@@ -1,0 +1,49 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ---- Virtual environments ----
+venv/
+env/
+.env/
+.venv/
+ENV/
+
+# ---- Environment / secrets ----
+.env
+.env.*
+!.env.example
+
+# ---- Logs ----
+*.log
+server_log.txt
+logs/
+
+# ---- Temp / scratch files ----
+temp_*.txt
+tmp/
+*.tmp
+
+# ---- Editor / IDE ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+
+# ---- Testing ----
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# ---- Vercel ----
+.vercel/

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login — AquaBliss</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0d1b2a;
+      --blue: #0096c7;
+      --sky:  #48cae4;
+      --text: #1a2c3d;
+      --muted:#5a6f7e;
+      --light:#f0f8ff;
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2.75rem 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+    }
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.75rem;
+    }
+    .logo-row img { height: 36px; width: auto; border-radius: 8px; }
+    .logo-row span { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text); }
+    h1 { font-size: 1.5rem; color: var(--text); margin-bottom: 0.35rem; }
+    .subtitle { font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; }
+
+    .error-box {
+      background: #fff0f0;
+      border: 1px solid #fdc5c5;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: #c0392b;
+      margin-bottom: 1.25rem;
+    }
+
+    .form-row { margin-bottom: 1rem; }
+    label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--muted); margin-bottom: 5px; }
+    input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #d4e3ef;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: var(--blue); }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      margin-top: 0.5rem;
+      transition: background 0.2s;
+    }
+    button:hover { background: var(--sky); }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.83rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .back-link:hover { color: var(--blue); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo-row">
+      <img src="{{ url_for('static', filename='logo-1.PNG') }}" alt="AquaBliss logo" width="36" height="36" />
+      <span>AquaBliss</span>
+    </div>
+    <h1>Admin login</h1>
+    <p class="subtitle">This area is for authorised staff only.</p>
+
+    {% if error %}
+      <div class="error-box">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('login') }}">
+      <div class="form-row">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autocomplete="username" autofocus />
+      </div>
+      <div class="form-row">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password" />
+      </div>
+      <button type="submit">Sign in</button>
+    </form>
+
+    <a class="back-link" href="{{ url_for('index') }}">← Back to AquaBliss</a>
+  </div>
+</body>
+</html>

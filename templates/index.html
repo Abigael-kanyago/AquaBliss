@@ -1,0 +1,2118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="AquaBliss — Clean, pure water delivered to your home or office in Makongeni. Order refills or packaged 20L bottles today." />
+  <title>AquaBliss | Pure Water, Pure Bliss</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Variables ─────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --navy: #0d1b2a;
+      --blue: #0096c7;
+      --sky: #48cae4;
+      --light: #f0f8ff;
+      --white: #ffffff;
+      --gold: #e9c46a;
+      --gray: #6c757d;
+      --border: rgba(255, 255, 255, 0.12);
+      --card-bg: #f7fbff;
+      --text: #1a2c3d;
+      --muted: #5a6f7e;
+      --radius: 14px;
+      --shadow: 0 8px 32px rgba(13, 27, 42, 0.10);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ── Navbar ──────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 68px;
+      background: rgba(13, 27, 42, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo img {
+      height: 38px;
+      width: auto;
+      border-radius: 8px;
+    }
+
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.75);
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--sky);
+    }
+
+    .nav-cta {
+      background: var(--blue);
+      color: var(--white) !important;
+      padding: 9px 22px;
+      border-radius: 50px;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--sky) !important;
+      transform: translateY(-1px);
+    }
+
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: var(--navy);
+      padding: 1.5rem 5%;
+      z-index: 99;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Hero ──────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.18;
+      background-color: var(--navy);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(13, 27, 42, 0.98) 45%, rgba(13, 27, 42, 0.6) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 120px 6% 80px 8%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(72, 202, 228, 0.15);
+      border: 1px solid rgba(72, 202, 228, 0.3);
+      color: var(--sky);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    .hero h1 span {
+      color: var(--sky);
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+      max-width: 420px;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    /* Stats now in normal flow — no more overlap */
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.7s 0.45s ease both;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .hero-stat {
+      color: var(--white);
+    }
+
+    .hero-stat strong {
+      display: block;
+      font-size: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--sky);
+    }
+
+    .hero-stat span {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0, 150, 199, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--sky);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 150, 199, 0.45);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 13px 30px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--sky);
+      background: rgba(72, 202, 228, 0.08);
+    }
+
+    /* ── Hero visual (right side) ──────────────────────── */
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* decorative rings */
+    .hero-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(72, 202, 228, 0.12);
+      animation: pulse-ring 4s ease-in-out infinite;
+    }
+
+    .hero-ring:nth-child(1) {
+      width: 320px;
+      height: 320px;
+      animation-delay: 0s;
+    }
+
+    .hero-ring:nth-child(2) {
+      width: 460px;
+      height: 460px;
+      animation-delay: 0.8s;
+    }
+
+    .hero-ring:nth-child(3) {
+      width: 600px;
+      height: 600px;
+      animation-delay: 1.6s;
+      border-color: rgba(72, 202, 228, 0.06);
+    }
+
+    @keyframes pulse-ring {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: scale(1.04);
+        opacity: 1;
+      }
+    }
+
+    /* floating dots */
+    .hero-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--sky);
+      opacity: 0.5;
+      animation: float-dot 6s ease-in-out infinite;
+    }
+
+    .hero-dot:nth-child(4) {
+      width: 8px;
+      height: 8px;
+      top: 22%;
+      left: 18%;
+      animation-delay: 0s;
+    }
+
+    .hero-dot:nth-child(5) {
+      width: 5px;
+      height: 5px;
+      top: 68%;
+      left: 80%;
+      animation-delay: 1s;
+      opacity: 0.3;
+    }
+
+    .hero-dot:nth-child(6) {
+      width: 6px;
+      height: 6px;
+      top: 40%;
+      left: 88%;
+      animation-delay: 2s;
+    }
+
+    .hero-dot:nth-child(7) {
+      width: 4px;
+      height: 4px;
+      top: 80%;
+      left: 25%;
+      animation-delay: 3s;
+      opacity: 0.25;
+    }
+
+    @keyframes float-dot {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-14px);
+      }
+    }
+
+    /* slide cards */
+    .slides-wrap {
+      position: relative;
+      width: 300px;
+      height: 380px;
+    }
+
+    .slide-card {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(72, 202, 228, 0.2);
+      border-radius: 24px;
+      padding: 2.25rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      transform: translateX(50px) scale(0.96);
+      will-change: transform, opacity;
+    }
+
+    .slide-card-refill {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("{{ url_for('static', filename='water_refilling.png') }}");
+      background-size: cover;
+      background-position: center;
+      padding: 0 !important;
+    }
+
+    .slide-card-packaged {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("{{ url_for('static', filename='packaged_water_lineup.png') }}");
+      background-size: cover;
+      background-position: center;
+      padding: 0 !important;
+    }
+
+    .slide-card-quality {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("{{ url_for('static', filename='first.png') }}");
+      background-size: cover;
+      background-position: center;
+      padding: 0 !important;
+    }
+
+    .slide-card:nth-child(1) {
+      animation: slideCard 12s 0s infinite;
+    }
+
+    .slide-card:nth-child(2) {
+      animation: slideCard 12s 4s infinite;
+    }
+
+    .slide-card:nth-child(3) {
+      animation: slideCard 12s 8s infinite;
+    }
+
+    @keyframes slideCard {
+      0% {
+        opacity: 0;
+        transform: translateX(50px) scale(0.96);
+      }
+
+      8%,
+      28% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+
+      36%,
+      100% {
+        opacity: 0;
+        transform: translateX(-50px) scale(0.96);
+      }
+    }
+
+    .slide-icon {
+      font-size: 2.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .slide-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sky);
+      background: rgba(0, 180, 216, 0.15);
+      padding: 4px 10px;
+      border-radius: 50px;
+      margin-bottom: 0.5rem;
+      width: fit-content;
+    }
+
+    /* Modern Glassmorphic Showcases */
+    .slide-glass-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(13, 27, 42, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 0 0 24px 24px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .slide-glass-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--white);
+      margin: 0 0 4px 0;
+      font-weight: 600;
+    }
+
+    .slide-price-inline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 8px;
+    }
+
+    .slide-price-inline strong {
+      font-size: 1.45rem;
+      color: var(--sky);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+
+    .slide-price-inline span {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* slide dots indicator */
+    .slide-dots {
+      position: absolute;
+      bottom: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+    }
+
+    .slide-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .slide-dot:nth-child(1) {
+      animation: dotActive 12s 0s infinite;
+    }
+
+    .slide-dot:nth-child(2) {
+      animation: dotActive 12s 4s infinite;
+    }
+
+    .slide-dot:nth-child(3) {
+      animation: dotActive 12s 8s infinite;
+    }
+
+    @keyframes dotActive {
+
+      0%,
+      8% {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1);
+      }
+
+      8%,
+      30% {
+        background: var(--sky);
+        transform: scale(1.3);
+      }
+
+      36%,
+      100% {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1);
+      }
+    }
+
+    /* ── Trust strip ──────────────────────────────────── */
+    .trust-strip {
+      background: var(--navy);
+      padding: 18px 5%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .trust-icon {
+      width: 32px;
+      height: 32px;
+      background: rgba(72, 202, 228, 0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ── Section base ─────────────────────────────────── */
+    .section {
+      padding: 80px 5%;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ── Services ─────────────────────────────────────── */
+    .services {
+      background: var(--light);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(0, 150, 199, 0.1);
+      box-shadow: var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(13, 27, 42, 0.14);
+    }
+
+    .service-img-wrap {
+      width: 100%;
+      height: 260px;
+      background: var(--navy);
+      overflow: hidden;
+    }
+
+    .service-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      transition: opacity 0.3s, transform 0.4s;
+    }
+
+    .service-card:hover .service-img-wrap img {
+      opacity: 1;
+      transform: scale(1.04);
+    }
+
+    .service-body {
+      padding: 1.5rem;
+    }
+
+    .service-tag {
+      display: inline-block;
+      background: rgba(0, 150, 199, 0.1);
+      color: var(--blue);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 50px;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-body h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .service-body p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 1.25rem;
+    }
+
+    .service-price strong {
+      font-size: 1.4rem;
+      color: var(--blue);
+      font-family: 'Playfair Display', serif;
+    }
+
+    .service-price span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .btn-service {
+      width: 100%;
+      padding: 12px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .btn-service:hover {
+      background: var(--blue);
+    }
+
+    /* ── Quality badges ──────────────────────────────── */
+    .quality {
+      background: var(--white);
+    }
+
+    .quality-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .quality-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 1.75rem 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(0, 150, 199, 0.1);
+    }
+
+    .quality-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .quality-card h4 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .quality-card p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── About ───────────────────────────────────────── */
+    .about {
+      background: var(--navy);
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .about .section-label {
+      color: var(--sky);
+    }
+
+    .about .section-title {
+      color: var(--white);
+    }
+
+    .about .section-sub {
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+    }
+
+    .about-img-wrap {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(72, 202, 228, 0.1);
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-img-wrap img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+
+    .about-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 1rem;
+    }
+
+    .about-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--sky);
+      border-radius: 50%;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .about-detail p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.6;
+    }
+
+    /* ── Testimonials ────────────────────────────────── */
+    .testimonials {
+      background: var(--light);
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .testi-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      border: 1px solid rgba(0, 150, 199, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+      letter-spacing: 2px;
+    }
+
+    .testi-card blockquote {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .testi-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .testi-author strong {
+      font-size: 0.9rem;
+      display: block;
+    }
+
+    .testi-author span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── Mpesa / Payment ─────────────────────────────── */
+    .payment {
+      background: var(--white);
+      padding: 56px 5%;
+    }
+
+    .payment-box {
+      background: var(--card-bg);
+      border: 1.5px dashed rgba(0, 150, 199, 0.3);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .payment-box h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .payment-box p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .payment-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      text-align: left;
+      margin-bottom: 12px;
+    }
+
+    .payment-num {
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .payment-step p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .payment-step p strong {
+      color: var(--text);
+    }
+
+    /* ── Contact / Footer ────────────────────────────── */
+    .contact-bar {
+      background: var(--navy);
+      padding: 48px 5%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 32px;
+    }
+
+    .contact-item {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .contact-item strong {
+      display: block;
+      color: var(--sky);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .contact-item p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .contact-item a {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .contact-item a:hover {
+      color: var(--sky);
+    }
+
+    footer {
+      background: #080f18;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--sky);
+    }
+
+    /* ── WhatsApp float ──────────────────────────────── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 58px;
+      height: 58px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 28px rgba(37, 211, 102, 0.55);
+    }
+
+    .whatsapp-float img {
+      width: 30px;
+      height: 30px;
+    }
+
+    /* ── Modal ───────────────────────────────────────── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 15, 24, 0.75);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--white);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 520px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.5rem;
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: var(--light);
+      border: none;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #e2e8ed;
+    }
+
+    .modal-tag {
+      display: inline-block;
+      background: rgba(0, 150, 199, 0.1);
+      color: var(--blue);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 50px;
+      margin-bottom: 0.6rem;
+    }
+
+    .modal h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+      margin-bottom: 1rem;
+    }
+
+    .form-row label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #d4e3ef;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      border-color: var(--blue);
+    }
+
+    .form-row textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .price-display {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 1.25rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .price-display span {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .price-display strong {
+      font-size: 1.3rem;
+      font-family: 'Playfair Display', serif;
+      color: var(--blue);
+    }
+
+    /* confirmation step */
+    .confirm-step {
+      display: none;
+    }
+
+    .confirm-step.active {
+      display: block;
+    }
+
+    .form-step.hidden {
+      display: none;
+    }
+
+    .confirm-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      padding: 8px 0;
+      border-bottom: 1px solid #eef2f6;
+    }
+
+    .confirm-row:last-child {
+      border-bottom: none;
+    }
+
+    .confirm-row span:first-child {
+      color: var(--muted);
+    }
+
+    .confirm-row span:last-child {
+      font-weight: 500;
+    }
+
+    .btn-full {
+      width: 100%;
+      padding: 14px;
+      background: var(--blue);
+      color: var(--white);
+      border: none;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+      margin-top: 1rem;
+    }
+
+    .btn-full:hover {
+      background: var(--sky);
+    }
+
+    .btn-full:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-back {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      color: var(--muted);
+      border: 1.5px solid #d4e3ef;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      margin-top: 8px;
+      transition: border-color 0.2s;
+    }
+
+    .btn-back:hover {
+      border-color: var(--blue);
+    }
+
+    /* success screen */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .success-screen.active {
+      display: block;
+    }
+
+    .success-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .success-screen h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .success-screen p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .form-error {
+      display: none;
+      background: #fff0f0;
+      border: 1px solid #fdc5c5;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: #c0392b;
+      margin-bottom: 1rem;
+    }
+
+    .form-error.visible {
+      display: block;
+    }
+
+    /* ── Animations ──────────────────────────────────── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        display: none;
+      }
+
+      .hero-content {
+        padding: 120px 6% 80px;
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hero-stats {
+        gap: 20px;
+      }
+
+      .about-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .about-img-wrap {
+        min-height: 220px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-links {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── Navbar ─────────────────────────────────────────── -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <a class="nav-logo" href="#">
+      <img src="{{ url_for('static', filename='logo-1.PNG') }}" alt="AquaBliss logo" width="38" height="38"
+        style="background:rgba(255,255,255,0.1);border-radius:8px;" />
+      <span class="nav-brand">AquaBliss</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" class="nav-cta" onclick="openModal('refill')">Order Now</a></li>
+    </ul>
+    <button class="hamburger" aria-label="Open menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation">
+    <a href="#services" onclick="toggleMenu()">Services</a>
+    <a href="#about" onclick="toggleMenu()">About</a>
+    <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="#" style="color:var(--sky);" onclick="openModal('refill');toggleMenu()">Order Now</a>
+  </div>
+
+  <!-- ── Hero ───────────────────────────────────────────── -->
+  <section class="hero" aria-label="Hero">
+    <img class="hero-img" src="{{ url_for('static', filename='first.png') }}" alt="Clean water" width="1400"
+      height="900" fetchpriority="high" />
+    <div class="hero-overlay"></div>
+
+    <!-- LEFT: text content -->
+    <div class="hero-content">
+
+      <h1>Pure water,<br>delivered<br><span>to your door</span></h1>
+      <p class="hero-desc">Clean, fresh water for your home or office — refills and packaged 20L bottles delivered same
+        day along Garissa Road, Makongeni.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openModal('refill')">Order a refill</button>
+        <button class="btn-outline" onclick="openModal('packaged')">Buy packaged water</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>KSh 10</strong>
+          <span>Per litre</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Same day</strong>
+          <span>Delivery</span>
+        </div>
+        <div class="hero-stat">
+          <strong>6 days</strong>
+          <span>A week</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: animated slideshow -->
+    <div class="hero-visual" aria-hidden="true">
+      <!-- decorative rings -->
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <div class="hero-ring"></div>
+      <!-- floating dots -->
+      <div class="hero-dot"></div>
+      <div class="hero-dot"></div>
+      <div class="hero-dot"></div>
+      <div class="hero-dot"></div>
+
+      <div class="slides-wrap">
+        <!-- Slide 1: Refilling -->
+        <div class="slide-card slide-card-refill">
+          <div class="slide-glass-content">
+            <span class="slide-tag">Most popular</span>
+            <h3>Water Refilling</h3>
+            <div class="slide-price-inline">
+              <strong>KSh 10</strong>
+              <span>Per Litre · Free Delivery</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Packaged -->
+        <div class="slide-card slide-card-packaged">
+          <div class="slide-glass-content">
+            <span class="slide-tag">Branded available</span>
+            <h3>Packaged Water</h3>
+            <div class="slide-price-inline">
+              <strong>KSh 180</strong>
+              <span>Per 20L Bottle</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Quality -->
+        <div class="slide-card slide-card-quality">
+          <div class="slide-glass-content">
+            <span class="slide-tag">Quality guaranteed</span>
+            <h3>Always Pure</h3>
+            <div class="slide-price-inline">
+              <strong>Lab Tested</strong>
+              <span>Every Batch · Fresh</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- dot indicators -->
+        <div class="slide-dots">
+          <div class="slide-dot"></div>
+          <div class="slide-dot"></div>
+          <div class="slide-dot"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Trust strip ────────────────────────────────────── -->
+  <div class="trust-strip" aria-label="Key features">
+    <div class="trust-item">
+      <div class="trust-icon">✅</div>Lab-tested clean water
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🚚</div>Free delivery
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">📞</div>Same-day service
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">💳</div>Pay via Mpesa
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🕒</div>Open Sun–Fri, 9am–9:30pm
+    </div>
+  </div>
+
+  <!-- ── Services ───────────────────────────────────────── -->
+  <section class="section services" id="services" aria-label="Our services">
+    <div class="section-label reveal">What we offer</div>
+    <h2 class="section-title reveal">Choose your water service</h2>
+    <p class="section-sub reveal">Whether you need a quick refill or sealed branded bottles — we've got you covered with
+      clean, pure water every time.</p>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-img-wrap">
+          <img src="{{ url_for('static', filename='water_refilling.png') }}" alt="Water refilling service" width="400"
+            height="260" loading="lazy" style="background:#ffffff; object-fit: contain; object-position: center;" />
+        </div>
+        <div class="service-body">
+          <span class="service-tag">Most popular</span>
+          <h3>Water Refilling</h3>
+          <p>We refill your existing bottles with clean, filtered water. Bring your bottle or we'll supply one.</p>
+          <div class="service-price">
+            <strong>KSh 10</strong>
+            <span>/ litre &nbsp;·&nbsp; Bottle +KSh 180 &nbsp;·&nbsp; Pump +KSh 250</span>
+          </div>
+          <button class="btn-service" onclick="openModal('refill')">Order a refill</button>
+        </div>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="service-img-wrap" style="background:#0a2240;">
+          <img src="{{ url_for('static', filename='packaged_water_lineup.png') }}" alt="Packaged bottled water"
+            width="400" height="260" loading="lazy" style="background:#0a2240; object-fit: cover;" />
+        </div>
+        <div class="service-body">
+          <span class="service-tag">Branded available</span>
+          <h3>Packaged Water</h3>
+          <p>Sealed 20L bottles — perfect for offices. Optional custom branding for your business or event.</p>
+          <div class="service-price">
+            <strong>KSh 180</strong>
+            <span>/ 20L bottle &nbsp;·&nbsp; Branding +KSh 100</span>
+          </div>
+          <button class="btn-service" onclick="openModal('packaged')">Order packaged water</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Quality badges ─────────────────────────────────── -->
+  <section class="section quality" aria-label="Quality assurance">
+    <div class="section-label reveal">Why choose us</div>
+    <h2 class="section-title reveal">Water you can trust</h2>
+    <div class="quality-grid" style="margin-top:2rem;">
+      <div class="quality-card reveal">
+        <div class="quality-icon">🔬</div>
+        <h4>Lab tested</h4>
+        <p>Our water is regularly tested to ensure it meets safe drinking water standards.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-icon">🚚</div>
+        <h4>Free same-day delivery</h4>
+        <p>Order before 5pm and we'll deliver to your home or office the same day.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-icon">💧</div>
+        <h4>Always fresh</h4>
+        <p>We never store water for long periods. Every delivery is freshly purified.</p>
+      </div>
+      <div class="quality-card reveal">
+        <div class="quality-icon">🤝</div>
+        <h4>Local business</h4>
+        <p>We are your neighbours — available on WhatsApp 6 days a week.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── About ──────────────────────────────────────────── -->
+  <section class="section about" id="about" aria-label="About AquaBliss">
+    <div class="about-inner">
+      <div>
+        <div class="section-label reveal">Our story</div>
+        <h2 class="section-title reveal">Built for Makongeni,<br>by Makongeni</h2>
+        <p class="section-sub reveal">AquaBliss started with a simple belief — everyone deserves access to clean,
+          affordable water without the hassle. We set up along Garissa Road to serve homes and offices in the Makongeni
+          area with fast, reliable water delivery.</p>
+        <div class="about-detail reveal">
+          <div class="about-dot"></div>
+          <p>Operating 6 days a week from 9:00am to 9:30pm so you're never left without water.</p>
+        </div>
+        <div class="about-detail reveal">
+          <div class="about-dot"></div>
+          <p>Two convenient contact numbers and WhatsApp so you can always reach us.</p>
+        </div>
+        <div class="about-detail reveal">
+          <div class="about-dot"></div>
+          <p>Trusted by families and offices for clean, affordable water.</p>
+        </div>
+      </div>
+      <div class="about-img-wrap reveal">
+        <img src="{{ url_for('static', filename='about_story_kenyan.png') }}" alt="AquaBliss water delivery" width="540"
+          height="340" loading="lazy" style="background:rgba(72,202,228,0.1); object-fit: cover;" />
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ── Payment / Mpesa ────────────────────────────────── -->
+  <section class="payment" aria-label="How to pay">
+    <div class="payment-box reveal">
+      <h3>How to pay — Mpesa</h3>
+      <p>We accept Mpesa payments. Here's how it works after placing your order:</p>
+      <div class="payment-step">
+        <div class="payment-num">1</div>
+        <p>Go to <strong>Mpesa → Lipa na Mpesa → Pay Bill</strong></p>
+      </div>
+      <div class="payment-step">
+        <div class="payment-num">2</div>
+        <p>Send to <strong>0746808075</strong> (AquaBliss). Use your name as the account reference.</p>
+      </div>
+      <div class="payment-step">
+        <div class="payment-num">3</div>
+        <p>we'll then process your delivery.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact bar ────────────────────────────────────── -->
+  <div class="contact-bar" id="contact" aria-label="Contact information">
+    <div class="contact-item">
+      <strong>Location</strong>
+      <p>Along Garissa Road<br>Oryx Makongeni</p>
+    </div>
+    <div class="contact-item">
+      <strong>Phone</strong>
+      <p>
+        <a href="tel:+254746808075">0746 808 075</a><br>
+        <a href="tel:+254743970594">0743 970 594</a>
+      </p>
+    </div>
+    <div class="contact-item">
+      <strong>Email</strong>
+      <p><a href="mailto:aquabliss217@gmail.com">aquabliss217@gmail.com</a></p>
+    </div>
+    <div class="contact-item">
+      <strong>Hours</strong>
+      <p>Sunday – Friday<br>9:00am – 9:30pm</p>
+    </div>
+  </div>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer>
+    <p>© <span id="year"></span> AquaBliss. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+    </div>
+  </footer>
+
+  <!-- ── WhatsApp float ─────────────────────────────────── -->
+  <a class="whatsapp-float" href="https://wa.me/254743970594" target="_blank" rel="noopener noreferrer"
+    aria-label="Chat with AquaBliss on WhatsApp">
+    <img src="{{ url_for('static', filename='whatsapp.png') }}" alt="WhatsApp" width="30" height="30" loading="lazy" />
+  </a>
+
+  <!-- ── Order Modal ────────────────────────────────────── -->
+  <div class="modal-backdrop" id="orderModal" role="dialog" aria-modal="true" aria-label="Place an order">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+
+      <!-- Step 1: Form -->
+      <div class="form-step" id="formStep">
+        <span class="modal-tag" id="modalTag">Water Refilling</span>
+        <h2 id="modalTitle">Refill order</h2>
+
+        <div class="form-error" id="formError"></div>
+
+        <div class="form-grid">
+          <div class="form-row">
+            <label for="name">Full name *</label>
+            <input type="text" id="name" placeholder="e.g. Jane Mwangi" autocomplete="name" />
+          </div>
+          <div class="form-row">
+            <label for="phone">Phone number *</label>
+            <input type="tel" id="phone" placeholder="e.g. 0712345678" autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="email">Email address *</label>
+          <input type="email" id="email" placeholder="jane@example.com" autocomplete="email" />
+        </div>
+
+        <div class="form-row">
+          <label for="address">Delivery address *</label>
+          <textarea id="address" placeholder="House number, street, area..."></textarea>
+        </div>
+
+        <!-- Refill fields -->
+        <div id="refillFields">
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="liters">Litres of water *</label>
+              <input type="number" id="liters" min="1" max="500" value="20" placeholder="20" />
+            </div>
+            <div class="form-row">
+              <label for="bottle">Need a bottle?</label>
+              <select id="bottle">
+                <option value="no">No, I have my own</option>
+                <option value="yes">Yes — add KSh 180</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="pump">Need a pump?</label>
+            <select id="pump">
+              <option value="no">No</option>
+              <option value="yes">Yes — add KSh 250</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Packaged fields -->
+        <div id="packagedFields" style="display:none;">
+          <div class="form-grid">
+            <div class="form-row">
+              <label for="quantity">Number of 20L bottles *</label>
+              <input type="number" id="quantity" min="1" max="100" value="1" placeholder="1" />
+            </div>
+            <div class="form-row">
+              <label for="brand">Custom branding?</label>
+              <select id="brand">
+                <option value="no">No</option>
+                <option value="yes">Yes — add KSh 100</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-display">
+          <span>Estimated total</span>
+          <strong id="totalDisplay">KSh 0</strong>
+        </div>
+
+        <button class="btn-full" onclick="goToConfirm()">Review order →</button>
+      </div>
+
+      <!-- Step 2: Confirm -->
+      <div class="confirm-step" id="confirmStep">
+        <span class="modal-tag">Confirm your order</span>
+        <h2>Order summary</h2>
+        <div id="confirmRows" style="margin: 1.25rem 0;"></div>
+        <button class="btn-full" id="placeOrderBtn" onclick="placeOrder()">Confirm & place order</button>
+        <button class="btn-back" onclick="goBack()">← Edit order</button>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">💧</div>
+        <h2>Order placed!</h2>
+        <p>Thank you for choosing AquaBliss. We have received your order and will contact you shortly.</p>
+        
+        <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:12px; margin:15px 0; text-align:center;">
+          <p style="font-size:0.8rem; color:var(--muted); margin-bottom:8px;">Want instant delivery confirmation? Send order details directly to our WhatsApp!</p>
+          <a href="#" id="whatsappDispatchBtn" target="_blank" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:11px; background:#25d366; color:white; border-radius:30px; font-size:0.88rem; font-weight:600; text-decoration:none; box-shadow:0 4px 15px rgba(37,211,102,0.3); transition:all 0.2s;">
+            <img src="{{ url_for('static', filename='whatsapp.png') }}" style="height:18px; width:18px; border-radius:0;" alt="WA" />
+            Send via WhatsApp
+          </a>
+        </div>
+
+        <button class="btn-full" style="margin-top:0.5rem;" onclick="closeModal()">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Year ───────────────────────────────────────────────
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ── Mobile menu ────────────────────────────────────────
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    // ── Scroll reveal ──────────────────────────────────────
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ── Prices (loaded from server) ────────────────────────
+    let prices = {
+      refill_price_per_liter: 10,
+      bottle_cost: 180,
+      pump_cost: 250,
+      packaged_price_20l: 180,
+      branding_cost: 100
+    };
+
+    fetch('/get-prices')
+      .then(r => r.json())
+      .then(data => {
+        if (data.success) {
+          data.prices.forEach(p => { prices[p.key] = parseFloat(p.value); });
+          recalculate();
+        }
+      }).catch(() => { });
+
+    // ── Modal ─────────────────────────────────────────────
+    let currentType = 'refill';
+
+    function openModal(type) {
+      currentType = type;
+      document.getElementById('orderModal').classList.add('open');
+      document.getElementById('formStep').classList.remove('hidden');
+      document.getElementById('confirmStep').classList.remove('active');
+      document.getElementById('successScreen').classList.remove('active');
+      document.getElementById('formError').classList.remove('visible');
+      document.body.style.overflow = 'hidden';
+
+      if (type === 'refill') {
+        document.getElementById('modalTag').textContent = 'Water Refilling';
+        document.getElementById('modalTitle').textContent = 'Refill order';
+        document.getElementById('refillFields').style.display = 'block';
+        document.getElementById('packagedFields').style.display = 'none';
+      } else {
+        document.getElementById('modalTag').textContent = 'Packaged Water';
+        document.getElementById('modalTitle').textContent = 'Packaged water order';
+        document.getElementById('refillFields').style.display = 'none';
+        document.getElementById('packagedFields').style.display = 'block';
+      }
+      recalculate();
+    }
+
+    function closeModal() {
+      document.getElementById('orderModal').classList.remove('open');
+      document.body.style.overflow = '';
+      resetForm();
+    }
+
+    document.getElementById('orderModal').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+
+    // ── Price calculation ─────────────────────────────────
+    function recalculate() {
+      let total = 0;
+      if (currentType === 'refill') {
+        const liters = parseInt(document.getElementById('liters').value) || 0;
+        total = liters * prices.refill_price_per_liter;
+        if (document.getElementById('bottle').value === 'yes') total += prices.bottle_cost;
+        if (document.getElementById('pump').value === 'yes') total += prices.pump_cost;
+      } else {
+        const qty = parseInt(document.getElementById('quantity').value) || 0;
+        total = qty * prices.packaged_price_20l;
+        if (document.getElementById('brand').value === 'yes') total += prices.branding_cost;
+      }
+      document.getElementById('totalDisplay').textContent = 'KSh ' + total.toLocaleString();
+      return total;
+    }
+
+    ['liters', 'bottle', 'pump', 'quantity', 'brand'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('change', recalculate);
+      if (el && el.tagName === 'INPUT') el.addEventListener('input', recalculate);
+    });
+
+    // ── Validation ────────────────────────────────────────
+    function showError(msg) {
+      const el = document.getElementById('formError');
+      el.textContent = msg;
+      el.classList.add('visible');
+    }
+
+    function validate() {
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      if (!name) { showError('Please enter your full name.'); return false; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); return false; }
+      if (!phone) { showError('Please enter your phone number.'); return false; }
+      if (!address) { showError('Please enter your delivery address.'); return false; }
+
+      if (currentType === 'refill') {
+        const liters = parseInt(document.getElementById('liters').value);
+        if (!liters || liters < 1) { showError('Please enter the number of litres (minimum 1).'); return false; }
+      } else {
+        const qty = parseInt(document.getElementById('quantity').value);
+        if (!qty || qty < 1) { showError('Please enter the number of bottles (minimum 1).'); return false; }
+      }
+      return true;
+    }
+
+    // ── Confirm step ──────────────────────────────────────
+    function goToConfirm() {
+      document.getElementById('formError').classList.remove('visible');
+      if (!validate()) return;
+
+      const total = recalculate();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+
+      let rows = [
+        ['Order type', currentType === 'refill' ? 'Water Refilling' : 'Packaged Water'],
+        ['Name', name],
+        ['Email', email],
+        ['Phone', phone],
+        ['Address', address],
+      ];
+
+      if (currentType === 'refill') {
+        rows.push(['Litres', document.getElementById('liters').value]);
+        rows.push(['Bottle', document.getElementById('bottle').value === 'yes' ? 'Yes (+KSh 180)' : 'No']);
+        rows.push(['Pump', document.getElementById('pump').value === 'yes' ? 'Yes (+KSh 250)' : 'No']);
+      } else {
+        rows.push(['Quantity', document.getElementById('quantity').value + ' × 20L bottles']);
+        rows.push(['Branding', document.getElementById('brand').value === 'yes' ? 'Yes (+KSh 100)' : 'No']);
+      }
+      rows.push(['Total', 'KSh ' + total.toLocaleString()]);
+
+      document.getElementById('confirmRows').innerHTML = rows.map(([k, v]) =>
+        `<div class="confirm-row"><span>${k}</span><span>${v}</span></div>`
+      ).join('');
+
+      document.getElementById('formStep').classList.add('hidden');
+      document.getElementById('confirmStep').classList.add('active');
+    }
+
+    function goBack() {
+      document.getElementById('confirmStep').classList.remove('active');
+      document.getElementById('formStep').classList.remove('hidden');
+    }
+
+    // ── Submit ────────────────────────────────────────────
+    async function placeOrder() {
+      const btn = document.getElementById('placeOrderBtn');
+      btn.disabled = true;
+      btn.textContent = 'Placing order…';
+
+      const payload = {
+        name: document.getElementById('name').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        address: document.getElementById('address').value.trim(),
+        order_type: currentType,
+      };
+
+      if (currentType === 'refill') {
+        payload.liters = document.getElementById('liters').value;
+        payload.bottle = document.getElementById('bottle').value;
+        payload.pump = document.getElementById('pump').value;
+      } else {
+        payload.quantity = document.getElementById('quantity').value;
+        payload.brand = document.getElementById('brand').value;
+      }
+
+      try {
+        const res = await fetch('/submit-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Build WhatsApp pre-filled message
+          const name = document.getElementById('name').value.trim();
+          const phone = document.getElementById('phone').value.trim();
+          const address = document.getElementById('address').value.trim();
+          const total = recalculate();
+          
+          let detailsText = '';
+          if (currentType === 'refill') {
+            const liters = document.getElementById('liters').value;
+            const bottle = document.getElementById('bottle').value === 'yes' ? 'Yes' : 'No';
+            const pump = document.getElementById('pump').value === 'yes' ? 'Yes' : 'No';
+            detailsText = `${liters}L Refill (Bottle: ${bottle}, Pump: ${pump})`;
+          } else {
+            const qty = document.getElementById('quantity').value;
+            const brand = document.getElementById('brand').value === 'yes' ? 'Yes' : 'No';
+            detailsText = `${qty} × 20L Packaged (Branded: ${brand})`;
+          }
+          
+          const textMsg = `Hello AquaBliss! I have placed an order on your website.\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Order:* ${detailsText}\n*Total:* KSh ${total.toLocaleString()}\n*Delivery Address:* ${address}\n\nPlease confirm delivery!`;
+          const encoded = encodeURIComponent(textMsg);
+          
+          // Connect directly to Thika office line: 0746 808 075
+          document.getElementById('whatsappDispatchBtn').href = `https://wa.me/254746808075?text=${encoded}`;
+
+          document.getElementById('confirmStep').classList.remove('active');
+          document.getElementById('successScreen').classList.add('active');
+        } else {
+          goBack();
+          showError(data.message || 'Something went wrong. Please try again.');
+        }
+      } catch {
+        goBack();
+        showError('Network error. Please check your connection and try again.');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Confirm & place order';
+      }
+    }
+
+    function resetForm() {
+      ['name', 'email', 'phone', 'address'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.getElementById('liters').value = 20;
+      document.getElementById('bottle').value = 'no';
+      document.getElementById('pump').value = 'no';
+      document.getElementById('quantity').value = 1;
+      document.getElementById('brand').value = 'no';
+      document.getElementById('formStep').classList.remove('hidden');
+      document.getElementById('confirmStep').classList.remove('active');
+      document.getElementById('successScreen').classList.remove('active');
+      document.getElementById('formError').classList.remove('visible');
+      recalculate();
+    }
+  </script>
+</body>
+
+</html>

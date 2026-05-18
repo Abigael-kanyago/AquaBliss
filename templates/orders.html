@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orders — AquaBliss Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0d1b2a;
+      --blue: #0096c7;
+      --sky:  #48cae4;
+      --text: #1a2c3d;
+      --muted:#5a6f7e;
+      --light:#f0f8ff;
+      --bg:   #f5f8fc;
+      --white:#ffffff;
+      --radius:12px;
+    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* Sidebar nav */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 220px;
+      background: var(--navy);
+      padding: 1.5rem 1rem;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 2.5rem;
+      padding-left: 8px;
+    }
+    .sidebar-logo img { height: 32px; border-radius: 7px; }
+    .sidebar-logo span { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #fff; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      margin-bottom: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
+    .nav-item.active { background: rgba(0,150,199,0.2); color: var(--sky); }
+    .sidebar-spacer { flex: 1; }
+    .logout-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .logout-btn:hover { color: #ff8080; }
+
+    /* Main area */
+    .main {
+      margin-left: 220px;
+      padding: 2rem 2.5rem;
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.75rem;
+    }
+    .page-header h1 { font-size: 1.6rem; }
+    .page-header p { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
+
+    /* Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 1.75rem;
+    }
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      border: 1px solid #e2edf5;
+    }
+    .stat-card p { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    .stat-card strong { font-size: 1.6rem; font-family: 'Playfair Display', serif; color: var(--text); }
+    .stat-card .stat-sub { font-size: 0.78rem; color: var(--muted); margin-top: 2px; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+
+    /* Filter bar */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .filter-bar input, .filter-bar select {
+      padding: 8px 12px;
+      border: 1.5px solid #d4e3ef;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      outline: none;
+      background: var(--white);
+    }
+    .filter-bar input:focus, .filter-bar select:focus { border-color: var(--blue); }
+    .filter-bar input { flex: 1; min-width: 180px; }
+
+    /* Table */
+    .table-wrap {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid #e2edf5;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 640px; }
+    thead { background: var(--light); }
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid #e2edf5;
+    }
+    td {
+      padding: 14px 16px;
+      font-size: 0.875rem;
+      border-bottom: 1px solid #f0f4f8;
+      vertical-align: middle;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--light); }
+
+    /* Status badge */
+    .status {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .status-pending    { background: #fff8e1; color: #b8860b; }
+    .status-processing { background: #e3f2fd; color: #1565c0; }
+    .status-delivered  { background: #e8f5e9; color: #2e7d32; }
+    .status-cancelled  { background: #fce4ec; color: #c62828; }
+
+    /* Status select in table */
+    .status-select {
+      padding: 5px 8px;
+      border: 1px solid #d4e3ef;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      cursor: pointer;
+      background: var(--white);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      z-index: 1000;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem;
+      color: var(--muted);
+    }
+    .empty-state p { font-size: 0.9rem; margin-top: 8px; }
+
+    /* Prices modal */
+    .prices-btn {
+      padding: 9px 20px;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .prices-btn:hover { background: var(--sky); }
+
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(8,15,24,0.6);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 440px;
+    }
+    .modal h2 { font-size: 1.3rem; margin-bottom: 1.25rem; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .price-row label { font-size: 0.875rem; color: var(--muted); }
+    .price-row input {
+      width: 100px;
+      padding: 7px 10px;
+      border: 1.5px solid #d4e3ef;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      text-align: right;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      outline: none;
+    }
+    .price-row input:focus { border-color: var(--blue); }
+    .modal-actions { display: flex; gap: 10px; margin-top: 1.5rem; }
+    .btn-save {
+      flex: 1; padding: 11px; background: var(--blue); color: #fff;
+      border: none; border-radius: 50px; font-size: 0.9rem;
+      font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+    .btn-save:hover { background: var(--sky); }
+    .btn-cancel {
+      flex: 1; padding: 11px; background: transparent;
+      color: var(--muted); border: 1.5px solid #d4e3ef;
+      border-radius: 50px; font-size: 0.9rem;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<nav class="sidebar" aria-label="Admin navigation">
+  <div class="sidebar-logo">
+    <img src="{{ url_for('static', filename='logo-1.PNG') }}" alt="AquaBliss" width="32" height="32" />
+    <span>AquaBliss</span>
+  </div>
+  <a class="nav-item active" href="{{ url_for('view_orders') }}">📦 Orders</a>
+  <a class="nav-item" href="#" onclick="openPrices()">💰 Prices</a>
+  <a class="nav-item" href="#" onclick="openStaff()">👥 Staff</a>
+  <a class="nav-item" href="{{ url_for('index') }}" target="_blank">🌐 View site</a>
+  <div class="sidebar-spacer"></div>
+  <a class="logout-btn" href="{{ url_for('logout') }}">🚪 Sign out</a>
+</nav>
+
+<!-- Main -->
+<main class="main">
+  <div class="page-header">
+    <div>
+      <h1>Orders</h1>
+      <p>All customer orders, most recent first.</p>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button class="prices-btn" onclick="openPrices()">Manage prices</button>
+      <button class="prices-btn" style="background:#2ec4b6;" onclick="openStaff()">Manage staff</button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  {% set total_orders = orders | length %}
+  {% set pending_count = orders | selectattr('status','equalto','pending') | list | length %}
+  {% set delivered_count = orders | selectattr('status','equalto','delivered') | list | length %}
+  {% set total_revenue = orders | selectattr('status','ne','cancelled') | sum(attribute='total_price') %}
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <p>Total orders</p>
+      <strong>{{ total_orders }}</strong>
+    </div>
+    <div class="stat-card">
+      <p>Pending</p>
+      <strong>{{ pending_count }}</strong>
+      <p class="stat-sub">awaiting action</p>
+    </div>
+    <div class="stat-card">
+      <p>Delivered</p>
+      <strong>{{ delivered_count }}</strong>
+    </div>
+    <div class="stat-card">
+      <p>Total revenue</p>
+      <strong>KSh {{ "{:,.0f}".format(total_revenue) }}</strong>
+    </div>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <input type="text" id="searchInput" placeholder="Search by name, email, address…" oninput="filterTable()" />
+    <select id="statusFilter" onchange="filterTable()">
+      <option value="">All statuses</option>
+      <option value="pending">Pending</option>
+      <option value="processing">Processing</option>
+      <option value="delivered">Delivered</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+    <select id="typeFilter" onchange="filterTable()">
+      <option value="">All types</option>
+      <option value="refill">Refill</option>
+      <option value="packaged">Packaged</option>
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    {% if orders %}
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Details</th>
+          <th>Total</th>
+          <th>Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr data-status="{{ order.status }}" data-type="{{ order.order_type }}">
+          <td style="color:var(--muted); font-size:0.8rem;">#{{ order.id }}</td>
+          <td>
+            <strong style="display:block; font-size:0.88rem;">{{ order.name }}</strong>
+            <span style="font-size:0.78rem; color:var(--muted);">{{ order.email }}</span><br>
+            <span style="font-size:0.78rem; color:var(--muted);">{{ order.phone }}</span>
+          </td>
+          <td>
+            <span style="font-size:0.8rem; background:rgba(0,150,199,0.1); color:var(--blue); padding:3px 8px; border-radius:50px;">
+              {{ order.order_type | capitalize }}
+            </span>
+          </td>
+          <td style="font-size:0.82rem; color:var(--muted); max-width:160px; line-height:1.5;">
+            {% if order.order_type == 'refill' %}
+              {{ order.details.get('liters','—') }}L
+              {% if order.details.get('bottle') == 'yes' %} · bottle{% endif %}
+              {% if order.details.get('pump') == 'yes' %} · pump{% endif %}
+            {% else %}
+              {{ order.details.get('quantity','—') }} × 20L
+              {% if order.details.get('brand') == 'yes' %} · branded{% endif %}
+            {% endif %}
+            <br><span title="{{ order.address }}">{{ order.address[:40] }}{% if order.address|length > 40 %}…{% endif %}</span>
+          </td>
+          <td><strong>KSh {{ "{:,.0f}".format(order.total_price) }}</strong></td>
+          <td style="font-size:0.8rem; color:var(--muted); white-space:nowrap;">
+            {{ order.created_at.strftime('%d %b %Y') if order.created_at else '—' }}<br>
+            {{ order.created_at.strftime('%H:%M') if order.created_at else '' }}
+          </td>
+          <td>
+            <select class="status-select" onchange="updateStatus({{ order.id }}, this.value, this)">
+              <option value="pending"    {% if order.status=='pending'    %}selected{% endif %}>Pending</option>
+              <option value="processing" {% if order.status=='processing' %}selected{% endif %}>Processing</option>
+              <option value="delivered"  {% if order.status=='delivered'  %}selected{% endif %}>Delivered</option>
+              <option value="cancelled"  {% if order.status=='cancelled'  %}selected{% endif %}>Cancelled</option>
+            </select>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      <div style="font-size:2.5rem;">📭</div>
+      <p>No orders yet. They'll appear here once customers start ordering.</p>
+    </div>
+    {% endif %}
+  </div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Prices modal -->
+<div class="modal-backdrop" id="pricesModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2>Manage prices</h2>
+    <div class="price-row">
+      <label>Refill (per litre)</label>
+      <input type="number" id="p_refill" min="0" step="1" />
+    </div>
+    <div class="price-row">
+      <label>New bottle</label>
+      <input type="number" id="p_bottle" min="0" step="1" />
+    </div>
+    <div class="price-row">
+      <label>Pump</label>
+      <input type="number" id="p_pump" min="0" step="1" />
+    </div>
+    <div class="price-row">
+      <label>Packaged 20L bottle</label>
+      <input type="number" id="p_packaged" min="0" step="1" />
+    </div>
+    <div class="price-row">
+      <label>Branding</label>
+      <input type="number" id="p_branding" min="0" step="1" />
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closePrices()">Cancel</button>
+      <button class="btn-save" onclick="savePrices()">Save prices</button>
+    </div>
+  </div>
+</div>
+
+<!-- Staff modal -->
+<div class="modal-backdrop" id="staffModal" role="dialog" aria-modal="true">
+  <div class="modal" style="max-width: 500px;">
+    <h2 style="display:flex; justify-content:space-between; align-items:center; font-size:1.3rem; margin-bottom:1.25rem;">
+      <span>Manage Staff</span>
+      <span style="font-size:0.8rem; color:var(--muted); font-weight:normal;">Logged in as: {{ session.get('admin_username') }}</span>
+    </h2>
+    
+    <!-- Add Staff Form (Only visible if admin role is 'admin') -->
+    {% if session.get('admin_role') == 'admin' %}
+    <div style="border-bottom:1px solid #e2edf5; padding-bottom:1.25rem; margin-bottom:1.25rem;">
+      <h3 style="font-size:0.9rem; margin-bottom:10px; color:var(--text); font-weight:500;">Add New Staff Member</h3>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <input type="text" id="s_username" placeholder="Username" style="flex:1; min-width:110px; padding:8px 10px; border:1.5px solid #d4e3ef; border-radius:8px; font-size:0.85rem; outline:none;" />
+        <input type="password" id="s_password" placeholder="Password" style="flex:1; min-width:110px; padding:8px 10px; border:1.5px solid #d4e3ef; border-radius:8px; font-size:0.85rem; outline:none;" />
+        <select id="s_role" style="padding:8px 10px; border:1.5px solid #d4e3ef; border-radius:8px; font-size:0.85rem; background:white; outline:none; cursor:pointer;">
+          <option value="staff">Staff</option>
+          <option value="admin">Admin</option>
+        </select>
+        <button onclick="addStaffMember()" style="padding:8px 15px; background:var(--blue); color:white; border:none; border-radius:8px; font-size:0.85rem; font-weight:500; cursor:pointer; font-family:'DM Sans', sans-serif;">Add</button>
+      </div>
+      <div id="staffFormError" style="color:#c0392b; font-size:0.8rem; margin-top:6px; display:none; font-weight:500;"></div>
+    </div>
+    {% endif %}
+    
+    <!-- Staff List Table -->
+    <h3 style="font-size:0.9rem; margin-bottom:8px; color:var(--text); font-weight:500;">Active Staff Accounts</h3>
+    <div style="max-height: 200px; overflow-y: auto; border: 1px solid #e2edf5; border-radius: 8px; margin-bottom: 1.25rem;">
+      <table style="width:100%; font-size:0.85rem; min-width:unset; border-collapse:collapse;">
+        <thead>
+          <tr style="background:#f5f8fc;">
+            <th style="padding:8px 12px; font-size:0.7rem; border-bottom:1px solid #e2edf5; color:var(--muted); text-transform:uppercase; text-align:left;">Username</th>
+            <th style="padding:8px 12px; font-size:0.7rem; border-bottom:1px solid #e2edf5; color:var(--muted); text-transform:uppercase; text-align:left;">Role</th>
+            <th style="padding:8px 12px; font-size:0.7rem; border-bottom:1px solid #e2edf5; color:var(--muted); text-transform:uppercase; text-align:right;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="staffTableBody">
+          <!-- Populated dynamically via JS -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div style="display:flex; justify-content:flex-end;">
+      <button class="prices-btn" onclick="closeStaff()" style="width:100px;">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Toast ──────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ── Update order status ────────────────────────────────
+  async function updateStatus(id, status, selectEl) {
+    selectEl.disabled = true;
+    try {
+      const res  = await fetch(`/update-order-status/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Order #${id} marked as ${status}`);
+        const row = selectEl.closest('tr');
+        if (row) row.setAttribute('data-status', status);
+      } else {
+        showToast('Error: ' + data.message);
+      }
+    } catch {
+      showToast('Network error — please try again.');
+    } finally {
+      selectEl.disabled = false;
+    }
+  }
+
+  // ── Filter ─────────────────────────────────────────────
+  function filterTable() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const status = document.getElementById('statusFilter').value;
+    const type   = document.getElementById('typeFilter').value;
+    document.querySelectorAll('#ordersTable tbody tr').forEach(row => {
+      const text   = row.textContent.toLowerCase();
+      const rStatus= row.dataset.status || '';
+      const rType  = row.dataset.type || '';
+      const ok = text.includes(search)
+              && (!status || rStatus === status)
+              && (!type   || rType   === type);
+      row.style.display = ok ? '' : 'none';
+    });
+  }
+
+  // ── Prices modal ───────────────────────────────────────
+  let currentPrices = {};
+
+  async function openPrices() {
+    try {
+      const res  = await fetch('/get-prices');
+      const data = await res.json();
+      if (data.success) {
+        data.prices.forEach(p => { currentPrices[p.key] = p.value; });
+        document.getElementById('p_refill').value   = currentPrices['refill_price_per_liter'] || '';
+        document.getElementById('p_bottle').value   = currentPrices['bottle_cost'] || '';
+        document.getElementById('p_pump').value     = currentPrices['pump_cost'] || '';
+        document.getElementById('p_packaged').value = currentPrices['packaged_price_20l'] || '';
+        document.getElementById('p_branding').value = currentPrices['branding_cost'] || '';
+      }
+    } catch { showToast('Could not load prices.'); return; }
+    document.getElementById('pricesModal').classList.add('open');
+  }
+
+  function closePrices() {
+    document.getElementById('pricesModal').classList.remove('open');
+  }
+
+  async function savePrices() {
+    const payload = {
+      refill_price_per_liter: parseFloat(document.getElementById('p_refill').value),
+      bottle_cost:            parseFloat(document.getElementById('p_bottle').value),
+      pump_cost:              parseFloat(document.getElementById('p_pump').value),
+      packaged_price_20l:     parseFloat(document.getElementById('p_packaged').value),
+      branding_cost:          parseFloat(document.getElementById('p_branding').value),
+    };
+    try {
+      const res  = await fetch('/update-prices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) { showToast('Prices updated successfully!'); closePrices(); }
+      else showToast('Error: ' + data.message);
+    } catch { showToast('Network error.'); }
+  }
+
+  // ── Staff modal ─────────────────────────────────────────
+  async function openStaff() {
+    await loadStaffList();
+    document.getElementById('staffModal').classList.add('open');
+  }
+
+  function closeStaff() {
+    document.getElementById('staffModal').classList.remove('open');
+    const uEl = document.getElementById('s_username');
+    const pEl = document.getElementById('s_password');
+    if (uEl) uEl.value = '';
+    if (pEl) pEl.value = '';
+    const err = document.getElementById('staffFormError');
+    if (err) err.style.display = 'none';
+  }
+
+  async function loadStaffList() {
+    const tbody = document.getElementById('staffTableBody');
+    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:15px; color:var(--muted);">Loading staff...</td></tr>';
+    try {
+      const res = await fetch('/get-staff');
+      const data = await res.json();
+      if (data.success) {
+        if (data.staff.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:15px; color:var(--muted);">No staff found.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = data.staff.map(member => {
+          const isSelf = member.username === "{{ session.get('admin_username') }}";
+          const deleteBtn = isSelf 
+            ? '<span style="color:var(--muted); font-size:0.78rem; font-style:italic;">You</span>' 
+            : `{% if session.get('admin_role') == 'admin' %}<button onclick="deleteStaffMember(${member.id}, '${member.username}')" style="padding:3px 8px; background:#fff0f0; color:#c0392b; border:1px solid #fdc5c5; border-radius:5px; font-size:0.75rem; cursor:pointer; font-family:'DM Sans', sans-serif;">Delete</button>{% else %}<span style="color:var(--muted); font-size:0.75rem;">—</span>{% endif %}`;
+          return `
+            <tr style="border-bottom:1px solid #f0f4f8;">
+              <td style="padding:10px 12px; font-weight:500; text-align:left;">${member.username}</td>
+              <td style="padding:10px 12px; text-align:left;"><span style="font-size:0.75rem; padding:2px 6px; border-radius:50px; background:${member.role === 'admin' ? 'rgba(0,150,199,0.1)' : '#f0f4f8'}; color:${member.role === 'admin' ? 'var(--blue)' : 'var(--muted)'}; font-weight:500;">${member.role}</span></td>
+              <td style="padding:10px 12px; text-align:right;">${deleteBtn}</td>
+            </tr>
+          `;
+        }).join('');
+      } else {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; padding:15px; color:#c0392b;">${data.message}</td></tr>`;
+      }
+    } catch {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:15px; color:#c0392b;">Network error.</td></tr>';
+    }
+  }
+
+  async function addStaffMember() {
+    const usernameEl = document.getElementById('s_username');
+    const passwordEl = document.getElementById('s_password');
+    const roleEl = document.getElementById('s_role');
+    const errorEl = document.getElementById('staffFormError');
+    
+    errorEl.style.display = 'none';
+    const username = usernameEl.value.trim();
+    const password = passwordEl.value.trim();
+    const role = roleEl.value;
+    
+    if (!username || !password) {
+      errorEl.textContent = 'Please enter both a username and password.';
+      errorEl.style.display = 'block';
+      return;
+    }
+    
+    try {
+      const res = await fetch('/add-staff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, role }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Staff member added successfully!');
+        usernameEl.value = '';
+        passwordEl.value = '';
+        await loadStaffList();
+      } else {
+        errorEl.textContent = data.message;
+        errorEl.style.display = 'block';
+      }
+    } catch {
+      errorEl.textContent = 'Network error — please try again.';
+      errorEl.style.display = 'block';
+    }
+  }
+
+  async function deleteStaffMember(id, name) {
+    if (!confirm(`Are you sure you want to delete staff account '${name}'?`)) return;
+    try {
+      const res = await fetch(`/delete-staff/${id}`, { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        showToast(`Staff member '${name}' deleted successfully.`);
+        await loadStaffList();
+      } else {
+        showToast('Error: ' + data.message);
+      }
+    } catch {
+      showToast('Network error — please try again.');
+    }
+  }
+</script>
+</body>
+</html>
+
