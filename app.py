@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import re
+import ssl
 
 import pg8000
 from urllib.parse import urlparse
@@ -92,7 +93,25 @@ mail = Mail(app)
 # ---------------------------------------------------------------------------
 
 def get_db_connection():
-    """Return a new pg8000 connection using DATABASE_URL or individual env vars."""
+    """Return a new pg8000 connection using either individual env vars or DATABASE_URL."""
+    db_host = os.getenv("DB_HOST")
+    if db_host:
+        try:
+            ssl_context = None
+            if os.getenv("DB_SSL", "false").lower() not in ("false", "0", "no"):
+                ssl_context = ssl.create_default_context()
+            return pg8000.connect(
+                host=db_host,
+                user=os.getenv("DB_USER", "postgres"),
+                password=os.getenv("DB_PASSWORD") or "",
+                database=os.getenv("DB_NAME") or "postgres",
+                port=int(os.getenv("DB_PORT", 5432)),
+                timeout=5,
+                ssl_context=ssl_context,
+            )
+        except Exception as exc:
+            raise RuntimeError(f"DB connection failed (individual vars): {exc}") from exc
+
     db_url = os.getenv("DATABASE_URL")
     if db_url:
         try:
@@ -102,20 +121,24 @@ def get_db_connection():
             database = result.path[1:] if result.path else "postgres"
             hostname = result.hostname
             port = result.port or 5432
+            ssl_context = None
+            if os.getenv("DB_SSL", "True").lower() not in ("false", "0", "no"):
+                ssl_context = ssl.create_default_context()
             return pg8000.connect(
                 user=username,
                 password=password,
                 host=hostname,
                 port=port,
                 database=database,
-                timeout=5
+                timeout=5,
+                ssl_context=ssl_context,
             )
         except Exception as exc:
             raise RuntimeError(f"DB connection failed (DATABASE_URL): {exc}") from exc
 
     try:
         return pg8000.connect(
-            host=os.getenv("DB_HOST", "localhost"),
+            host="localhost",
             user=os.getenv("DB_USER", "postgres"),
             password=os.getenv("DB_PASSWORD") or "",
             database=os.getenv("DB_NAME") or "postgres",
