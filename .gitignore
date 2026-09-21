@@ -47,3 +47,6 @@ coverage.xml
 
 # ---- Vercel ----
 .vercel/
+
+.vercel
+.env*.local

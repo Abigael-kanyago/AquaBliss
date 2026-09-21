@@ -7,7 +7,8 @@ import ssl
 import pg8000
 from urllib.parse import urlparse
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for, send_from_directory
+from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_mail import Mail, Message
@@ -53,6 +54,7 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 
 app = Flask(__name__)
+CORS(app, supports_credentials=True)
 
 # Secret key — must be set in environment; fall back only for compiling/testing.
 secret_key = os.getenv("SECRET_KEY")
@@ -274,8 +276,18 @@ except Exception as exc:
 
 @app.route("/")
 def index():
-    """Serve the main landing page."""
+    """Serve the modern React app from frontend/dist if built, otherwise legacy index.html."""
+    dist_dir = os.path.join(app.root_path, "frontend", "dist")
+    if os.path.exists(os.path.join(dist_dir, "index.html")):
+        return send_from_directory(dist_dir, "index.html")
     return render_template("index.html")
+
+
+@app.route("/assets/<path:path>")
+def send_assets(path):
+    """Serve frontend static assets from Vite build."""
+    dist_assets = os.path.join(app.root_path, "frontend", "dist", "assets")
+    return send_from_directory(dist_assets, path)
 
 
 @app.route("/get-prices")
@@ -392,10 +404,15 @@ def submit_order():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Admin login page."""
+    """Admin login page and JSON API."""
     if request.method == "POST":
-        username = (request.form.get("username") or "").strip().lower()
-        password = (request.form.get("password") or "").strip()
+        if request.is_json:
+            data = request.get_json() or {}
+            username = (data.get("username") or "").strip().lower()
+            password = (data.get("password") or "").strip()
+        else:
+            username = (request.form.get("username") or "").strip().lower()
+            password = (request.form.get("password") or "").strip()
 
         try:
             conn = get_db_connection()
@@ -406,31 +423,53 @@ def login():
             conn.close()
         except Exception as exc:
             logger.error("Login database error: %s", exc)
+            if request.is_json:
+                return jsonify({"success": False, "message": "Database error."}), 500
             return render_template("login.html", error="Database connection error. Please try again.")
 
         if user and check_password_hash(user["password_hash"], password):
             session["admin_logged_in"] = True
             session["admin_username"] = user["username"]
             session["admin_role"] = user["role"]
+            if request.is_json:
+                return jsonify({"success": True, "username": user["username"], "role": user["role"]})
             next_url = request.args.get("next") or url_for("view_orders")
             return redirect(next_url)
 
+        if request.is_json:
+            return jsonify({"success": False, "message": "Invalid username or password."}), 401
         return render_template("login.html", error="Invalid username or password.")
 
     return render_template("login.html")
 
 
-@app.route("/logout")
+@app.route("/auth-status")
+def auth_status():
+    """Check current authentication status."""
+    if session.get("admin_logged_in"):
+        return jsonify({
+            "authenticated": True,
+            "username": session.get("admin_username"),
+            "role": session.get("admin_role")
+        })
+    return jsonify({"authenticated": False})
+
+
+@app.route("/logout", methods=["GET", "POST"])
 def logout():
     """Clear the admin session and redirect to login."""
     session.pop("admin_logged_in", None)
+    session.pop("admin_username", None)
+    session.pop("admin_role", None)
+    if request.is_json:
+        return jsonify({"success": True, "message": "Logged out successfully."})
     return redirect(url_for("login"))
 
 
 @app.route("/orders")
 @login_required
 def view_orders():
-    """Admin view: list all orders, most recent first."""
+    """Admin view: list all orders, most recent first (HTML or JSON)."""
     try:
         conn = get_db_connection()
         cur = DictCursor(conn.cursor())
@@ -441,11 +480,21 @@ def view_orders():
 
         for order in orders:
             if isinstance(order["details"], str):
-                order["details"] = json.loads(order["details"])
+                try:
+                    order["details"] = json.loads(order["details"])
+                except Exception:
+                    pass
+            if order.get("created_at"):
+                order["created_at_str"] = order["created_at"].strftime('%Y-%m-%d %H:%M')
+
+        if request.is_json or request.headers.get("Accept") == "application/json" or request.args.get("format") == "json":
+            return jsonify({"success": True, "orders": orders})
 
         return render_template("orders.html", orders=orders)
     except Exception as exc:
         logger.error("view_orders error: %s", exc)
+        if request.is_json or request.headers.get("Accept") == "application/json":
+            return jsonify({"success": False, "message": "Could not load orders."}), 500
         return "Could not load orders. Please try again.", 500
 
 

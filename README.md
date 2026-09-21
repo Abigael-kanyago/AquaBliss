@@ -1,150 +1,101 @@
 # 💧 AquaBliss
 
-A full-stack web application for managing water delivery and refilling orders. Customers can place refill or packaged-water orders online, and an admin panel allows the business owner to track orders, update statuses, and manage pricing — all in real time.
+A modern full-stack web application for managing pure water delivery and refilling orders in Makongeni and along Garissa Road, Thika. Built with a creative **React.js** glassmorphic frontend, authentic **Lucide vector icons**, and a robust **Flask + PostgreSQL** backend.
 
 **Live site:** [aqua-bliss.vercel.app](https://aqua-bliss.vercel.app)
 
 ---
 
-## Features
+## 🌟 Key Features
 
-- **Order placement** — customers choose between water refilling or packaged 20L bottles, select add-ons (pump, branding), and submit their delivery details
-- **Server-side pricing** — total is always recalculated on the backend to prevent client-side tampering
-- **Email notifications** — automatic confirmation emails to both the customer and the admin on each new order
-- **Admin dashboard** — password-protected panel to view all orders and update statuses (pending → processing → delivered / cancelled)
-- **Dynamic pricing** — admin can update product prices from the dashboard without touching code
-- **Rate limiting** — order endpoint is protected against spam (10 requests/minute per IP)
+- **Creative React Frontend** — Luminous oceanic glassmorphism with dynamic ambient lighting, responsive across mobile & desktop.
+- **Authentic Vector Iconography** — Crisp SVG icons powered by `lucide-react` (strictly zero AI-generated icon images).
+- **Interactive Order Studio** — Real-time price calculator & builder for water refills, packaged 20L bottles, and dispenser accessories.
+- **5-Stage Purity Lab Visualizer** — Interactive filtration explorer (Sediment, Activated Carbon, Reverse Osmosis, Mineral Balance, UV Sterilization) and TDS purity comparator.
+- **Smart Hydration & Savings Calculator** — Computes household/office monthly water requirements and estimated savings.
+- **Local Delivery Zone Explorer** — Makongeni & Garissa Road dispatch zones with live ETA estimations.
+- **Integrated Staff & Admin Portal** — Secure dashboard to track incoming orders, update statuses (`pending` → `processing` → `delivered`), adjust PostgreSQL live prices, and manage staff credentials.
+- **M-Pesa & Cash on Delivery** — Simple, reliable payment workflows for doorstep delivery.
+- **Server-Side Security & Rate Limiting** — Order total validation on Flask backend with rate-limiting protection.
 
 ---
 
-## Tech stack
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Backend | Python 3.11 · Flask 3.1 |
-| Database | PostgreSQL (Neon serverless) |
-| ORM / DB driver | psycopg2-binary |
-| Email | Flask-Mail · Gmail SMTP |
-| Rate limiting | Flask-Limiter |
-| Deployment | Vercel (serverless) |
-| Frontend | HTML · CSS · Vanilla JS |
+| Frontend | React 19 · Vite 8 · Vanilla CSS Design System · Lucide Icons · Canvas Confetti |
+| Backend | Python 3.11+ · Flask 3.1 · Flask-CORS · Flask-Limiter · Flask-Mail |
+| Database | PostgreSQL (Local / Neon serverless) · pg8000 |
+| Deployment | Vercel / Node + WSGI |
 
 ---
 
-## Project structure
+## 📁 Project Structure
 
 ```
 AquaBliss/
-├── app.py                  # Main Flask application
+├── package.json            # Root workspace scripts (npm run dev / build)
+├── app.py                  # Flask API & static backend server
 ├── requirements.txt        # Python dependencies
-├── vercel.json             # Vercel deployment config
-├── .env.example            # Example environment variables
-├── static/
-│   ├── css/
-│   └── js/
-├── templates/
-│   ├── index.html          # Landing page + order form
-│   ├── orders.html         # Admin orders dashboard
-│   └── login.html          # Admin login page
-└── tests/
-    └── test_app.py         # Pytest test suite
+├── frontend/               # Modern React.js Vite Frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Navbar.jsx               # Floating glass header & live store status
+│   │   │   ├── Hero.jsx                 # Dynamic hero with quick estimator
+│   │   │   ├── TrustStrip.jsx           # Value markers with Lucide vector icons
+│   │   │   ├── Services.jsx             # Service cards & pricing
+│   │   │   ├── OrderStudio.jsx          # Interactive customizer & builder
+│   │   │   ├── PurificationProcess.jsx  # 5-stage filtration & TDS meter
+│   │   │   ├── HydrationCalculator.jsx  # Monthly water & savings calculator
+│   │   │   ├── DeliveryZone.jsx         # Garissa Road delivery coverage
+│   │   │   ├── Testimonials.jsx         # Customer reviews
+│   │   │   ├── OrderModal.jsx           # Checkout & M-Pesa modal
+│   │   │   ├── AdminPortal.jsx          # Order management & price admin
+│   │   │   └── Footer.jsx               # Contact & WhatsApp connect
+│   │   ├── App.jsx                      # Main app shell & modal orchestration
+│   │   └── index.css                    # Oceanic design system & glassmorphism
+│   ├── package.json
+│   └── vite.config.js                   # Vite dev server + Flask API proxy
+├── templates/              # Fallback templates
+├── static/                 # Brand assets & logos
+└── tests/                  # Pytest test suite
 ```
 
 ---
 
-## Local development setup
+## 🚀 Running Locally
 
-### Prerequisites
+### 1. Start the Flask Backend
 
-- Python 3.10+
-- A PostgreSQL database (local or [Neon](https://neon.tech) free tier)
-
-### 1. Clone the repo
+Make sure your virtual environment is active and run:
 
 ```bash
-git clone https://github.com/Abigael-kanyago/AquaBliss.git
-cd AquaBliss
-```
-
-### 2. Create and activate a virtual environment
-
-```bash
-python -m venv venv
 # Windows
-venv\Scripts\activate
-# macOS / Linux
-source venv/bin/activate
-```
-
-### 3. Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Configure environment variables
-
-Copy the example file and fill in your values:
-
-```bash
-cp .env.example .env
-```
-
-| Variable | Description |
-|---|---|
-| `SECRET_KEY` | A long random string for Flask sessions |
-| `DATABASE_URL` | Full PostgreSQL connection string (e.g. from Neon) |
-| `ADMIN_USERNAME` | Admin login username |
-| `ADMIN_PASSWORD` | Admin login password |
-| `MAIL_USERNAME` | Gmail address used to send emails |
-| `MAIL_PASSWORD` | Gmail app password (not your account password) |
-| `ADMIN_EMAIL` | Email address to receive new-order notifications |
-| `DEBUG` | Set to `true` for local development only |
-
-### 5. Run the app
-
-```bash
+.venv\Scripts\activate
 python app.py
 ```
+*Backend runs on `http://127.0.0.1:5000`*
 
-Visit `http://localhost:5000`.
+### 2. Start the React Frontend
 
----
-
-## Running tests
+From the root workspace directory, run:
 
 ```bash
-pip install pytest
-pytest tests/ -v
+npm run dev
 ```
+*Frontend runs on `http://localhost:5173` with automated API proxying to Flask on port 5000.*
 
 ---
 
-## Deployment (Vercel)
+## 🔒 Admin Credentials
 
-1. Push your code to GitHub.
-2. Import the repo in [Vercel](https://vercel.com).
-3. Add all environment variables from the table above in **Project → Settings → Environment Variables**.
-4. Deploy. Vercel uses `vercel.json` to route requests to the Flask app via gunicorn.
-
-> **Important:** Never commit your `.env` file. It is listed in `.gitignore`.
-
----
-
-## API endpoints
-
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/` | — | Landing page |
-| GET | `/get-prices` | — | Returns current product prices |
-| POST | `/submit-order` | — | Place a new order (rate-limited) |
-| GET | `/login` | — | Admin login page |
-| GET | `/orders` | Admin | View all orders |
-| POST | `/update-order-status/<id>` | Admin | Update order status |
-| POST | `/update-prices` | Admin | Update product prices |
+- **Default Username:** `admin`
+- **Default Password:** `aquabliss2026`
+- Access via the **Shield Icon** in the navbar/footer or by visiting the Staff Portal.
 
 ---
 
 ## License
 
-MIT
+MIT © AquaBliss
