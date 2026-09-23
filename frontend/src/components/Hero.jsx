@@ -29,7 +29,7 @@ export default function Hero({ onOpenOrder, prices }) {
       title: 'Always Pure & Crisp',
       price: 'Lab Tested',
       sub: 'Reverse Osmosis Treated',
-      image: '/first.png',
+      image: '/banner.jpg',
       type: 'refill',
     },
   ];
@@ -57,7 +57,7 @@ export default function Hero({ onOpenOrder, prices }) {
     >
       {/* Background Hero Image with subtle opacity */}
       <img
-        src="/first.png"
+        src="/banner.jpg"
         alt="AquaBliss Water"
         style={{
           position: 'absolute',

@@ -13,89 +13,150 @@ body {
   color: #333;
 }
 
-/* Top Green Bar */
-.top-bar {
-  background-color: hsl(138, 94%, 36%);
-  color: white;
-  font-size: 14px;
-  padding: 10px 0;
+
+/* Clean Static Header */
+.main-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.top-bar-content {
+.header-container {
   display: flex;
-  justify-content: flex-end;
-  gap: 30px;
-  flex-wrap: wrap;
-  font-weight: 500;
+  justify-content: space-between;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 12px 20px;
 }
 
-/* Header with Scrolling Logo Marquee */
-.scrolling-header {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  background-color: #ffffff;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-  position: relative;
-}
-
-.scrolling-content {
+.header-brand {
   display: flex;
   align-items: center;
-  gap: 50px;
-  white-space: nowrap;
-  animation: scroll-left 40s linear infinite;
-  font-size: 28px;
-  color: #007bff;
-  font-weight: bold;
-  width: max-content;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
 }
 
-.scroll-logo {
-  height: 40px;
-  vertical-align: middle;
+.header-brand-text h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: #015fc9;
+  letter-spacing: -0.02em;
+  font-family: inherit;
+  line-height: 1.1;
 }
 
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+.header-brand-text p {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-/* Hero Slider / Banner */
-.hero-slider {
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-btn {
+  background: #0077cc;
+  color: #ffffff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.header-btn:hover {
+  background: #005fa3;
+  transform: translateY(-1px);
+}
+
+.header-btn-outline {
+  background: transparent;
+  color: #0077cc;
+  border: 1.5px solid #0077cc;
+}
+
+.header-btn-outline:hover {
+  background: #f0f7ff;
+  transform: translateY(-1px);
+}
+
+/* Hero Banner */
+.hero-banner {
   position: relative;
-  height: 400px;
   width: 100%;
+  background: #eef6fc;
   overflow: hidden;
-  background-color: #0077cc;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid rgba(0, 119, 204, 0.1);
 }
 
-.slides {
+.banner-wrapper {
   position: relative;
   width: 100%;
-  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  line-height: 0;
 }
 
-.slide-first {
+.banner-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 45% 20%;
+  height: auto;
   display: block;
+  object-fit: cover;
+  max-height: 540px;
 }
 
-@media (max-width: 768px) {
-  .hero-slider {
-    height: 250px;
-  }
+/* Interactive hotspot over the 'Order Now' visual button on the banner */
+.banner-order-hotspot {
+  position: absolute;
+  left: 3%;
+  top: 50%;
+  width: 16%;
+  height: 16%;
+  min-width: 120px;
+  min-height: 42px;
+  max-width: 200px;
+  border-radius: 40px;
+  cursor: pointer;
+  background: transparent;
+  border: 2px solid transparent;
+  z-index: 10;
+  transition: all 0.25s ease;
+}
+
+.banner-order-hotspot:hover,
+.banner-order-hotspot:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 20px rgba(59, 76, 184, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.3);
+  transform: scale(1.04);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 /* WhatsApp Float */
@@ -122,6 +183,56 @@ body {
 
 .whatsapp-float:hover {
   transform: scale(1.1);
+}
+
+/* Water Wave Transition Divider */
+.wave-separator {
+  position: relative;
+  width: 100%;
+  height: 75px;
+  background: #eef6fc;
+  overflow: hidden;
+  line-height: 0;
+  margin-top: -2px;
+}
+
+.waves {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 50px;
+  max-height: 90px;
+  display: block;
+}
+
+.parallax-waves > use {
+  animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+}
+
+.parallax-waves > use:nth-child(1) {
+  animation-delay: -2s;
+  animation-duration: 7s;
+}
+.parallax-waves > use:nth-child(2) {
+  animation-delay: -3s;
+  animation-duration: 10s;
+}
+.parallax-waves > use:nth-child(3) {
+  animation-delay: -4s;
+  animation-duration: 13s;
+}
+.parallax-waves > use:nth-child(4) {
+  animation-delay: -5s;
+  animation-duration: 20s;
+}
+
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
 }
 
 /* Services */
@@ -446,21 +557,38 @@ select:focus {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .top-bar-content {
-    justify-content: center;
-    text-align: center;
-    gap: 10px;
-    padding: 5px;
-    font-size: 12px;
+  .main-header {
+    padding: 4px 0;
   }
 
-  .scrolling-header {
-    padding: 5px 0;
+  .header-container {
+    padding: 8px 16px;
   }
 
-  .scrolling-content {
+  .header-brand-text h1 {
     font-size: 20px;
-    gap: 30px;
+  }
+
+  .header-brand-text p {
+    font-size: 10.5px;
+  }
+
+  .header-btn {
+    padding: 7px 12px;
+    font-size: 12.5px;
+  }
+
+  .banner-order-hotspot {
+    left: 2.5%;
+    top: 48%;
+    width: 22%;
+    height: 18%;
+    min-width: 90px;
+    min-height: 32px;
+  }
+
+  .wave-separator {
+    height: 50px;
   }
 
   .services {

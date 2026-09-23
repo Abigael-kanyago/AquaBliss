@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AdminPortal from './components/AdminPortal';
 import AquaBlissLogo from './components/AquaBlissLogo';
-import firstBannerImg from './assets/first.png';
+import bannerImg from './assets/banner.jpg';
 import whatsappImg from './assets/whatsapp.png';
 
 export default function App() {
@@ -197,29 +197,72 @@ export default function App() {
         </div>
       )}
 
-      {/* Header with Scrolling Logo Marquee */}
-      <div className="scrolling-header">
-        <div className="scrolling-content">
-          {/* Original Content */}
-          <AquaBlissLogo size={42} />
-          <span className="scroll-text">
-            Welcome to AquaBliss – Pure water, Pure bliss. We offer the best quality water, always fresh and pure!
-          </span>
 
-          {/* Duplicated Content for Seamless Loop */}
-          <AquaBlissLogo size={42} />
-          <span className="scroll-text">
-            Welcome to AquaBliss – Pure water, Pure bliss. We offer the best quality water, always fresh and pure!
-          </span>
+      {/* Clean Static Header */}
+      <header className="main-header">
+        <div className="header-container">
+          <a href="#" className="header-brand">
+            <AquaBlissLogo size={42} />
+            <div className="header-brand-text">
+              <h1>AquaBliss</h1>
+              <p>Pure Water, Pure Bliss</p>
+            </div>
+          </a>
+          <nav className="header-nav">
+            <button className="header-btn" onClick={() => toggleForm('refill')}>
+              Order Refill
+            </button>
+            <button className="header-btn header-btn-outline" onClick={() => toggleForm('packaged')}>
+              Packaged Water
+            </button>
+          </nav>
         </div>
-      </div>
+      </header>
 
-      {/* Hero Slider / Banner */}
-      <section className="hero-slider">
-        <div className="slides">
-          <img src={firstBannerImg} alt="Order Your Water, Delivered to Your Doorstep" className="slide-first" />
+      {/* Hero Banner with New Visual */}
+      <section className="hero-banner" id="home">
+        <div className="banner-wrapper">
+          <img
+            src={bannerImg}
+            alt="Order Your Water for an Instant Doorstep Delivery - AquaBliss"
+            className="banner-image"
+          />
+          {/* Interactive hotspot over the 'Order Now' button in the banner */}
+          <button
+            type="button"
+            className="banner-order-hotspot"
+            onClick={() => toggleForm('refill')}
+            title="Order Water Now"
+            aria-label="Order Water Now"
+          >
+            <span className="sr-only">Order Now</span>
+          </button>
         </div>
       </section>
+
+      {/* Dynamic Water Wave Transition */}
+      <div className="wave-separator">
+        <svg
+          className="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shapeRendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g className="parallax-waves">
+            <use href="#gentle-wave" x="48" y="0" fill="rgba(0, 150, 255, 0.12)" />
+            <use href="#gentle-wave" x="48" y="3" fill="rgba(72, 202, 228, 0.28)" />
+            <use href="#gentle-wave" x="48" y="5" fill="rgba(0, 119, 204, 0.2)" />
+            <use href="#gentle-wave" x="48" y="7" fill="#f0f8ff" />
+          </g>
+        </svg>
+      </div>
 
       {/* WhatsApp Floating Button */}
       <a
