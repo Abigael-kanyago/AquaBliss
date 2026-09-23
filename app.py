@@ -70,23 +70,33 @@ logger = logging.getLogger(__name__)
 
 # Rate limiter — prevents order-endpoint spam.
 limiter = Limiter(
-    get_remote_address,
+    key_func=get_remote_address,
     app=app,
     default_limits=["200 per day", "50 per hour"],
     storage_uri="memory://",
 )
 
+def get_int_env(key: str, default: int) -> int:
+    """Safely parse an integer from environment variables without throwing ValueError on empty string."""
+    val = os.getenv(key)
+    if val is not None:
+        val_str = str(val).strip()
+        if val_str.isdigit():
+            return int(val_str)
+    return default
+
+
 # ---------------------------------------------------------------------------
 # Email configuration
 # ---------------------------------------------------------------------------
 
-app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
-app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 587))
-app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "True") == "True"
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv(
-    "MAIL_DEFAULT_SENDER", os.getenv("MAIL_USERNAME")
+app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER") or "smtp.gmail.com"
+app.config["MAIL_PORT"] = get_int_env("MAIL_PORT", 587)
+app.config["MAIL_USE_TLS"] = (os.getenv("MAIL_USE_TLS") or "True").strip().lower() in ("true", "1", "yes")
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME") or None
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD") or None
+app.config["MAIL_DEFAULT_SENDER"] = (
+    os.getenv("MAIL_DEFAULT_SENDER") or os.getenv("MAIL_USERNAME") or "noreply@aquabliss.co.ke"
 )
 mail = Mail(app)
 
@@ -99,15 +109,16 @@ def get_db_connection():
     db_host = os.getenv("DB_HOST")
     if db_host:
         # Check SSL preference or default to True if cloud hostname (e.g. Supabase, Neon, AWS)
-        use_ssl = os.getenv("DB_SSL", "true" if ("." in db_host and db_host != "localhost" and db_host != "127.0.0.1") else "false").lower() not in ("false", "0", "no")
+        use_ssl = (os.getenv("DB_SSL") or ("true" if ("." in db_host and db_host != "localhost" and db_host != "127.0.0.1") else "false")).lower() not in ("false", "0", "no")
         ssl_ctx = ssl.create_default_context() if use_ssl else None
+        db_port = get_int_env("DB_PORT", 5432)
         try:
             return pg8000.connect(
                 host=db_host,
-                user=os.getenv("DB_USER", "postgres"),
+                user=os.getenv("DB_USER") or "postgres",
                 password=os.getenv("DB_PASSWORD") or "",
                 database=os.getenv("DB_NAME") or "postgres",
-                port=int(os.getenv("DB_PORT", 5432)),
+                port=db_port,
                 timeout=8,
                 ssl_context=ssl_ctx,
             )
@@ -117,10 +128,10 @@ def get_db_connection():
                 alt_ssl_ctx = None if use_ssl else ssl.create_default_context()
                 return pg8000.connect(
                     host=db_host,
-                    user=os.getenv("DB_USER", "postgres"),
+                    user=os.getenv("DB_USER") or "postgres",
                     password=os.getenv("DB_PASSWORD") or "",
                     database=os.getenv("DB_NAME") or "postgres",
-                    port=int(os.getenv("DB_PORT", 5432)),
+                    port=db_port,
                     timeout=8,
                     ssl_context=alt_ssl_ctx,
                 )
@@ -131,12 +142,12 @@ def get_db_connection():
     if db_url:
         try:
             result = urlparse(db_url)
-            username = result.username
+            username = result.username or "postgres"
             password = result.password or ""
             database = result.path[1:] if result.path else "postgres"
-            hostname = result.hostname
-            port = result.port or 5432
-            use_ssl = os.getenv("DB_SSL", "true").lower() not in ("false", "0", "no")
+            hostname = result.hostname or "localhost"
+            port = int(result.port) if result.port else 5432
+            use_ssl = (os.getenv("DB_SSL") or "true").lower() not in ("false", "0", "no")
             ssl_ctx = ssl.create_default_context() if use_ssl else None
             try:
                 return pg8000.connect(
@@ -164,10 +175,10 @@ def get_db_connection():
     try:
         return pg8000.connect(
             host="localhost",
-            user=os.getenv("DB_USER", "postgres"),
+            user=os.getenv("DB_USER") or "postgres",
             password=os.getenv("DB_PASSWORD") or "",
             database=os.getenv("DB_NAME") or "postgres",
-            port=int(os.getenv("DB_PORT", 5432)),
+            port=get_int_env("DB_PORT", 5432),
             timeout=5,
         )
     except Exception as exc:
@@ -311,6 +322,28 @@ def send_assets(path):
     """Serve frontend static assets from Vite build."""
     dist_assets = os.path.join(app.root_path, "frontend", "dist", "assets")
     return send_from_directory(dist_assets, path)
+
+
+@app.route("/<path:path>")
+def serve_file_or_fallback(path):
+    """Serve root-level static files (e.g. images, icons) or fallback to SPA index."""
+    # Avoid intercepting API / admin routes
+    if path in ("get-prices", "submit-order", "login", "logout", "orders", "api/orders", "api/prices", "api/users", "api/settings", "api/stats"):
+        return not_found(None)
+
+    dist_dir = os.path.join(app.root_path, "frontend", "dist")
+    dist_file = os.path.join(dist_dir, path)
+    if os.path.exists(dist_file) and os.path.isfile(dist_file):
+        return send_from_directory(dist_dir, path)
+
+    static_dir = os.path.join(app.root_path, "static")
+    static_file = os.path.join(static_dir, path)
+    if os.path.exists(static_file) and os.path.isfile(static_file):
+        return send_from_directory(static_dir, path)
+
+    if os.path.exists(os.path.join(dist_dir, "index.html")):
+        return send_from_directory(dist_dir, "index.html")
+    return render_template("index.html")
 
 
 @app.route("/get-prices")
@@ -737,7 +770,12 @@ def internal_error(error):
 # Entry point (local development only)
 # ---------------------------------------------------------------------------
 
+# Serverless handler aliases for Vercel / WSGI
+handler = app
+application = app
+
 if __name__ == "__main__":
     # Set DEBUG=true in .env for local development only.
     debug_mode = os.getenv("DEBUG", "false").lower() == "true"
     app.run(debug=debug_mode)
+
