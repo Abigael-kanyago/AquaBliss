@@ -7,7 +7,7 @@ import ssl
 import pg8000
 from urllib.parse import urlparse
 from dotenv import load_dotenv
-from flask import Flask, jsonify, redirect, render_template, request, session, url_for, send_from_directory
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for, send_from_directory, make_response
 from flask_cors import CORS
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -313,7 +313,11 @@ def index():
     """Serve the modern React app from frontend/dist if built, otherwise legacy index.html."""
     dist_dir = os.path.join(app.root_path, "frontend", "dist")
     if os.path.exists(os.path.join(dist_dir, "index.html")):
-        return send_from_directory(dist_dir, "index.html")
+        res = make_response(send_from_directory(dist_dir, "index.html"))
+        res.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        res.headers["Pragma"] = "no-cache"
+        res.headers["Expires"] = "0"
+        return res
     return render_template("index.html")
 
 
@@ -342,7 +346,11 @@ def serve_file_or_fallback(path):
         return send_from_directory(static_dir, path)
 
     if os.path.exists(os.path.join(dist_dir, "index.html")):
-        return send_from_directory(dist_dir, "index.html")
+        res = make_response(send_from_directory(dist_dir, "index.html"))
+        res.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        res.headers["Pragma"] = "no-cache"
+        res.headers["Expires"] = "0"
+        return res
     return render_template("index.html")
 
 
