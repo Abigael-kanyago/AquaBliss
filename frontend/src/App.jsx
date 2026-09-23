@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Droplets, Package, Check, ArrowRight } from 'lucide-react';
 import AdminPortal from './components/AdminPortal';
 import AquaBlissLogo from './components/AquaBlissLogo';
 import bannerImg from './assets/banner.jpg';
@@ -276,20 +277,99 @@ export default function App() {
       </a>
 
       {/* Services Section */}
-      <section id="services" className="services">
-        <div className="card">
-          <h3>Water Refilling</h3>
-          <p>We deliver clean refilled water to your home or office.</p>
-          <button className="btn" onClick={() => toggleForm('refill')}>
-            Order Now
-          </button>
-        </div>
-        <div className="card">
-          <h3>Packaged Water</h3>
-          <p>Buy sealed, labeled bottled water with optional branding.</p>
-          <button className="btn" onClick={() => toggleForm('packaged')}>
-            Order Now
-          </button>
+      <section id="services" className="services-section">
+        <div className="services-grid">
+          {/* Card 1: Water Refilling */}
+          <div className="pricing-card">
+            <div className="pricing-card-top">
+              <div className="pricing-icon-box">
+                <Droplets size={26} color="#ffffff" />
+              </div>
+              <div className="pricing-header-right">
+                <span className="badge-popular">★ MOST POPULAR</span>
+                <div className="pricing-cost">
+                  <span className="currency">KSh</span>
+                  <span className="amount">{prices.refill_price_per_liter || 10}</span>
+                  <span className="unit">/ litre</span>
+                </div>
+              </div>
+            </div>
+
+            <h3 className="pricing-title">Water Refilling</h3>
+            <p className="pricing-desc">
+              Bring your empty bottles or have us pick & refill them on the spot. Free doorstep delivery in Makongeni.
+            </p>
+
+            <ul className="pricing-features">
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span><strong>5-Stage Reverse Osmosis</strong> purified</span>
+              </li>
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span>Free doorstep delivery in Makongeni</span>
+              </li>
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span>Refill any container (5L, 10L, 20L+)</span>
+              </li>
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span>Bottle (+KSh {prices.bottle_cost || 180}) & Pump (+KSh {prices.pump_cost || 250}) available</span>
+              </li>
+            </ul>
+
+            <button className="pricing-btn" onClick={() => toggleForm('refill')}>
+              <span>Order Refill Now</span>
+              <ArrowRight size={18} />
+            </button>
+          </div>
+
+          {/* Card 2: Packaged 20L Water */}
+          <div className="pricing-card">
+            <div className="pricing-card-top">
+              <div className="pricing-icon-box">
+                <Package size={26} color="#ffffff" />
+              </div>
+              <div className="pricing-header-right">
+                <span className="badge-sealed">✔ SEALED & SANITIZED</span>
+                <div className="pricing-cost">
+                  <span className="currency">KSh</span>
+                  <span className="amount">{prices.packaged_price_20l || 180}</span>
+                  <span className="unit">/ 20L bottle</span>
+                </div>
+              </div>
+            </div>
+
+            <h3 className="pricing-title">Packaged 20L Water</h3>
+            <p className="pricing-desc">
+              Brand new, sealed 20L water dispenser bottles with tamper-evident caps. Perfect for homes & offices.
+            </p>
+
+            <ul className="pricing-features">
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span><strong>Food-grade BPA-free</strong> heavy duty bottle</span>
+              </li>
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span>Tamper-evident hygiene security seal</span>
+              </li>
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span>Fits all standard dispensers & pumps</span>
+              </li>
+              <li>
+                <span className="check-circle"><Check size={14} /></span>
+                <span>Optional custom branding (+KSh {prices.branding_cost || 100})</span>
+              </li>
+            </ul>
+
+            <button className="pricing-btn" onClick={() => toggleForm('packaged')}>
+              <span>Order 20L Bottle</span>
+              <ArrowRight size={18} />
+            </button>
+          </div>
         </div>
       </section>
 
